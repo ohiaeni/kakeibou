@@ -1,0 +1,19 @@
+{
+  "language": "en,ja",
+  "caseSensitive": false,
+  "ignorePaths": [
+    "**/build/**",
+    "**/bin/**",
+    ".gradle/**",
+    "gradle/**",
+    "**/generated/**",
+    ".vscode/**",
+    "**/*.gradle",
+    "gradlew",
+    "gradlew.bat",
+    "gradle.properties",
+    "**/.gitignore",
+    "api-docs/**/api-specification.json"
+  ],
+  "words": ["kakeibou", "jacoco", "gradlew"]
+}

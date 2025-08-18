@@ -1,6 +1,6 @@
 ext {
     // -- PLUGINS
-    springBootVersion = "3.5.3"
+    springBootVersion = "3.5.4"
     springDependencyManagementVersion = "1.1.7"
     springdocOpenapiGradlePluginVersion = "1.9.0"
     spotbugsVersion = "6.2.0"
@@ -22,7 +22,6 @@ ext {
     commonsLangVersion = "3.17.0"
     springSecurityVersion = "3.4.3"
     mybatisGeneratorVersion = "1.4.2"
-    jjwtVersion = "0.12.6"
 
     supportDependencies = [
         spring_boot_starter : "org.springframework.boot:spring-boot-starter",
@@ -43,10 +42,6 @@ ext {
         postgresql : "org.postgresql:postgresql:$postgresqlVersion",
         commons_lang3 : "org.apache.commons:commons-lang3:$commonsLangVersion",
         servlet_api : "jakarta.servlet:jakarta.servlet-api:$servletApiVersion",
-        jackson_databind : "com.fasterxml.jackson.core:jackson-databind",
-        jjwt_api : "io.jsonwebtoken:jjwt-api:$jjwtVersion",
-        jjwt_impl : "io.jsonwebtoken:jjwt-impl:$jjwtVersion",
-        jjwt_jackson : "io.jsonwebtoken:jjwt-jackson:$jjwtVersion",
 
         lombok : "org.projectlombok:lombok",
         slf4j : "org.slf4j:slf4j-simple",
