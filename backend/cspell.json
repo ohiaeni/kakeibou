@@ -15,5 +15,5 @@
     "**/.gitignore",
     "api-docs/**/api-specification.json"
   ],
-  "words": ["kakeibou", "jacoco", "gradlew"]
+  "words": ["kakeibou", "jacoco", "gradlew", "mybatis"]
 }
