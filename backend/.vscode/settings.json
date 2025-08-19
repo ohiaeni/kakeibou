@@ -8,7 +8,8 @@
     "gradlew",
     "kakeibou",
     "jvmargs",
-    "Dfile"
+    "Dfile",
+    "mybatis"
   ],
   // ファイル/ディレクトリ除外設定
   "cSpell.ignorePaths": [
