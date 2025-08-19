@@ -5,10 +5,10 @@
   "java.format.settings.url": "${workspaceFolder}\\config\\formatter\\eclipse-formatter.xml",
   "cSpell.words": [
     "applicationcore",
-    "gradlew",
-    "kakeibou",
-    "jvmargs",
     "Dfile",
+    "gradlew",
+    "jvmargs",
+    "kakeibou",
     "mybatis"
   ],
   // ファイル/ディレクトリ除外設定
