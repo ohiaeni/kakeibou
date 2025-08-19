@@ -3,16 +3,29 @@
 <generatorConfiguration>
     <context id="local"  targetRuntime="MyBatis3">
         <!-- 自動生成MapperにはMapperアノテーションを付与する -->
-        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/> 
         <!-- 自動生成される各要素のコメントに生成時刻が出力されないように設定する -->
         <commentGenerator>
             <property name="suppressDate" value="true" />
+            <property name="suppressAllComments" value="false" />
+            <property name="addRemarkComments" value="true" />
         </commentGenerator>
+        
         <!-- 接続先DB情報 -->
         <jdbcConnection driverClass="org.h2.Driver"
                         connectionURL="jdbc:h2:file:~/stapler;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;"
                         userId=""
-                        password="" />
+                        password="" >
+            <!-- UUIDの型情報を正しく取得するための設定 -->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+        
+        <!-- Java型マッピングの設定 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
         <!-- Model(Entity)作成先 -->
         <!--
         targetProjectにはjavaパッケージを指定します。
@@ -48,9 +61,32 @@
                         type="XMLMAPPER" />
                         
         <!-- 生成対象テーブル -->
-        <table schema="" tableName="user_roles" domainObjectName="UserRoleEntity" mapperName="UserRoleMapper">
+        <table schema="" tableName="user_accounts" domainObjectName="UserAccountEntity" mapperName="UserAccountMapper">
             <property name="mapUnderscoreToCamelCase" value="true" />
-            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <columnOverride column="id" javaType="java.util.UUID" jdbcType="OTHER"/>
+        </table>
+
+        <table schema="" tableName="expense_categories" domainObjectName="ExpenseCategoryEntity" mapperName="ExpenseCategoryMapper">
+            <property name="mapUnderscoreToCamelCase" value="true" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <columnOverride column="id" javaType="java.util.UUID" jdbcType="OTHER"/>
+        </table>
+
+        <table schema="" tableName="monthly_budgets" domainObjectName="MonthlyBudgetEntity" mapperName="MonthlyBudgetMapper">
+            <property name="mapUnderscoreToCamelCase" value="true" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <columnOverride column="id" javaType="java.util.UUID" jdbcType="OTHER"/>
+            <columnOverride column="user_id" javaType="java.util.UUID" jdbcType="OTHER"/>
+            <columnOverride column="category_id" javaType="java.util.UUID" jdbcType="OTHER"/>
+        </table>
+
+        <table schema="" tableName="expense_records" domainObjectName="ExpenseRecordEntity" mapperName="ExpenseRecordMapper">
+            <property name="mapUnderscoreToCamelCase" value="true" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <columnOverride column="id" javaType="java.util.UUID" jdbcType="OTHER"/>
+            <columnOverride column="user_id" javaType="java.util.UUID" jdbcType="OTHER"/>
+            <columnOverride column="category_id" javaType="java.util.UUID" jdbcType="OTHER"/>
         </table>
     </context>
 </generatorConfiguration>
