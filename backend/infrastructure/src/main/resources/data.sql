@@ -1,11 +1,11 @@
 -- 初期ユーザーデータ
-INSERT INTO users (id, username, email, password_hash) VALUES
+INSERT INTO user_accounts (id, username, email, password_hash) VALUES
     ('550e8400-e29b-41d4-a716-446655440001', 'user1', 'user1@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8ioctKk7Z4ooGH4a1QsW.J4Wm3G6u'),
     ('550e8400-e29b-41d4-a716-446655440002', 'user2', 'user2@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8ioctKk7Z4ooGH4a1QsW.J4Wm3G6u'),
     ('550e8400-e29b-41d4-a716-446655440003', 'admin', 'admin@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8ioctKk7Z4ooGH4a1QsW.J4Wm3G6u');
 
 -- カテゴリデータ
-INSERT INTO categories (id, name, description) VALUES
+INSERT INTO expense_categories (id, name, description) VALUES
     ('660e8400-e29b-41d4-a716-446655440001', '食費', '食事や食材の費用'),
     ('660e8400-e29b-41d4-a716-446655440002', '交通費', '電車、バス、タクシーなどの交通費'),
     ('660e8400-e29b-41d4-a716-446655440003', '住居費', '家賃、光熱費、通信費など'),
@@ -16,7 +16,7 @@ INSERT INTO categories (id, name, description) VALUES
     ('660e8400-e29b-41d4-a716-446655440008', '教育', '書籍、セミナー、学習関連の費用');
 
 -- 予算データ（2025年8月）
-INSERT INTO budgets (id, user_id, category_id, amount, year, month) VALUES
+INSERT INTO monthly_budgets (id, user_id, category_id, amount, budget_year, budget_month) VALUES
     ('770e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440001', '660e8400-e29b-41d4-a716-446655440001', 50000, 2025, 8),
     ('770e8400-e29b-41d4-a716-446655440002', '550e8400-e29b-41d4-a716-446655440001', '660e8400-e29b-41d4-a716-446655440002', 15000, 2025, 8),
     ('770e8400-e29b-41d4-a716-446655440003', '550e8400-e29b-41d4-a716-446655440001', '660e8400-e29b-41d4-a716-446655440003', 80000, 2025, 8),
@@ -25,7 +25,7 @@ INSERT INTO budgets (id, user_id, category_id, amount, year, month) VALUES
     ('770e8400-e29b-41d4-a716-446655440006', '550e8400-e29b-41d4-a716-446655440002', '660e8400-e29b-41d4-a716-446655440002', 20000, 2025, 8);
 
 -- 支出データ
-INSERT INTO expenses (id, user_id, category_id, amount, description, expense_date) VALUES
+INSERT INTO expense_records (id, user_id, category_id, amount, description, expense_date) VALUES
     ('880e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440001', '660e8400-e29b-41d4-a716-446655440001', 3500, 'スーパーマーケットでの買い物', '2025-08-01'),
     ('880e8400-e29b-41d4-a716-446655440002', '550e8400-e29b-41d4-a716-446655440001', '660e8400-e29b-41d4-a716-446655440002', 580, '電車代', '2025-08-01'),
     ('880e8400-e29b-41d4-a716-446655440003', '550e8400-e29b-41d4-a716-446655440001', '660e8400-e29b-41d4-a716-446655440001', 1200, 'コンビニ弁当', '2025-08-02'),
