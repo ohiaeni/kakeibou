@@ -19,7 +19,7 @@ public class MyBatisConfig {
 
   /**
    * MyBatis 設定のカスタマイズ。
-   * 
+   *
    * @return カスタマイズされた MyBatis 設定。
    */
   @Bean

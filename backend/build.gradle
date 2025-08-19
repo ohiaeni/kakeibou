@@ -4,7 +4,7 @@ buildscript {
 
 plugins {
   id 'com.github.spotbugs' version "$spotbugsVersion" apply false
-  id 'com.diffplug.spotless' version "$spotlessVersion"
+  id 'com.diffplug.spotless' version "$spotlessVersion" apply false
 }
 
 subprojects {
@@ -12,6 +12,7 @@ subprojects {
   apply plugin: 'jacoco'
   apply plugin: 'checkstyle'
   apply plugin: 'com.github.spotbugs'
+  apply plugin: 'com.diffplug.spotless'
 
   compileJava.options.encoding = 'UTF-8'
   compileTestJava.options.encoding = 'UTF-8'
@@ -70,14 +71,22 @@ subprojects {
       }
     }
   }
-}
-
-// Spotless configuration for formatting Gradle files
-spotless {
-  groovyGradle {
-    target '**/*.gradle'
-    trimTrailingWhitespace()
-    endWithNewline()
-    indentWithSpaces(2)
+  // Spotless configuration for formatting
+  spotless {
+    java {
+      target 'src/**/*.java'
+      trimTrailingWhitespace()
+      endWithNewline()
+      indentWithSpaces(2)
+      importOrder()
+      removeUnusedImports()
+      eclipse().configFile(rootProject.file('config/formatter/eclipse-formatter.xml'))
+    }
+    groovyGradle {
+      target '**/*.gradle'
+      trimTrailingWhitespace()
+      endWithNewline()
+      indentWithSpaces(2)
+    }
   }
 }
