@@ -50,7 +50,9 @@ jobs:
         working-directory: docs
 
       - name: Build with VitePress
-        run: npm run docs:build
+        run: |
+          npm run docs:build
+          ls -la .vitepress/dist/
         working-directory: docs
 
       - name: Upload artifact
