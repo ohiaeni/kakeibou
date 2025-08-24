@@ -48,5 +48,3 @@ hero:
 - **リポジトリ**: https://github.com/ohiaeni/kakeibou
 - **プロジェクト構成**: マルチモジュール（web, application-core, infrastructure, system-common）
 - **アーキテクチャパターン**: クリーンアーキテクチャ
-<!-- Force deploy: update -->
-<!-- Trigger after Pages setup -->
