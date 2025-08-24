@@ -9,7 +9,11 @@
     "VARCHAR",
     "Batis",
     "Thymeleaf",
-    "JSESSIONID"
+    "JSESSIONID",
+    "textlint",
+    "Configurer",
+    "utext",
+    "ohiaeni"
   ],
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
