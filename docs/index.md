@@ -8,30 +8,13 @@ hero:
   actions:
     - theme: brand
       text: 設計関連ドキュメント
-      link: /設計関連/アーキテクチャ設計
+      link: /00_設計関連/アーキテクチャ設計
     - theme: alt
       text: 開発関連ドキュメント
-      link: /開発関連/テスト戦略
-
-features:
-  - icon: 🏗️
-    title: アーキテクチャ設計
-    details: クリーンアーキテクチャベースのシステム設計とマルチモジュール構成
-  - icon: 🗄️
-    title: データベース設計
-    details: ER図、テーブル設計、インデックス戦略
-  - icon: 🌐
-    title: API設計
-    details: REST API仕様、エンドポイント一覧、レスポンス設計
-  - icon: 🔒
-    title: セキュリティ設計
-    details: 認証・認可、脅威対策、セキュリティ要件
-  - icon: 🎨
-    title: 画面設計
-    details: UI/UX設計、画面遷移、レスポンシブデザイン
-  - icon: 🧪
-    title: テスト戦略
-    details: テスト方針、テストケース作成指針、品質保証
+      link: /01_開発関連/テスト戦略
+    - theme: alt
+      text: 画面要件定義
+      link: /02_画面要件定義/
 ---
 
 # 家計簿アプリ設計書
