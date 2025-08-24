@@ -5,14 +5,15 @@
 ## 画面構成概要
 
 ### 画面一覧（RESTful URL設計）
-| 画面名           | URL                 | HTTPメソッド | 備考                       |
-| ---------------- | ------------------- | ------------ | -------------------------- |
-| ログイン画面     | /auth/login         | GET/POST     | ユーザー認証               |
-| ユーザー登録画面 | /user               | GET/POST     | 新規ユーザー登録           |
-| ダッシュボード   | /dashboard          | GET          | メイン画面、支出概要表示   |
-| 支出記録画面     | /expenses/new       | GET/POST     | 支出の入力・新規作成       |
-| 支出編集画面     | /expenses/{id}/edit | GET/POST     | 特定支出の編集             |
-| 支出履歴画面     | /expenses           | GET          | 支出記録の一覧表示・検索   |
-| 予算設定画面     | /budgets            | GET/POST     | 月次予算の設定・管理       |
-| レポート画面     | /reports            | GET          | 支出分析・グラフ表示       |
-| 設定画面         | /settings           | GET/POST     | ユーザー設定・カテゴリ管理 |
+| 画面名           | URL                   | HTTPメソッド | 備考                     |
+| ---------------- | --------------------- | ------------ | ------------------------ |
+| ダッシュボード   | /                     | GET          | メイン画面、支出概要表示 |
+| ユーザー登録画面 | /user                 | GET/POST     | 新規ユーザー登録         |
+| レポート画面     | /reports              | GET          | 支出分析・グラフ表示     |
+| ログイン画面     | /auth/login           | GET/POST     | ユーザー認証             |
+| 支出登録画面     | /expenses/new         | GET/POST     | 支出の入力・新規作成     |
+| 支出編集画面     | /expenses/{id}/edit   | GET/POST     | 特定支出の編集           |
+| 支出履歴画面     | /expenses             | GET          | 支出記録の一覧表示・検索 |
+| 予算設定画面     | /budgets              | GET/POST     | 月次予算の設定・管理     |
+| カテゴリ登録画面 | /categories/new       | GET/POST     | 新規カテゴリの登録       |
+| カテゴリ編集画面 | /categories/{id}/edit | GET/POST     | 特定カテゴリの編集       |

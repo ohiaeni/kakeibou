@@ -81,8 +81,8 @@ export default withMermaid(
                     link: "/02_画面要件定義/ログイン画面",
                   },
                   {
-                    text: "支出記録画面",
-                    link: "/02_画面要件定義/支出記録画面",
+                    text: "支出登録画面",
+                    link: "/02_画面要件定義/支出登録画面",
                   },
                   {
                     text: "支出履歴画面",
@@ -96,7 +96,6 @@ export default withMermaid(
                     text: "レポート画面",
                     link: "/02_画面要件定義/レポート画面",
                   },
-                  { text: "設定画面", link: "/02_画面要件定義/設定画面" },
                 ],
               },
               {
