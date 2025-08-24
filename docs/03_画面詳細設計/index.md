@@ -13,29 +13,27 @@
 | ユーザー登録画面         | /auth/register                  | GET/POST     | 新規ユーザー登録               |
 | 支出一覧画面             | /expenses                       | GET          | 支出記録の一覧表示・検索       |
 | 支出登録画面             | /expenses/new                   | GET/POST     | 支出の入力・新規作成           |
-| 支出編集画面             | /expenses/{id}/edit             | GET/PUT      | 特定支出の編集                 |
+| 支出編集画面             | /expenses/{id}/edit             | GET/POST     | 特定支出の編集                 |
 | 支出削除・確認画面       | /expenses/{id}/delete           | GET          | 支出削除の確認                 |
-| 支出削除・完了画面       | /expenses/{id}                  | DELETE       | 支出削除の実行・完了           |
+| 支出削除・完了画面       | /expenses/{id}/delete           | POST         | 支出削除の実行・完了           |
 | カテゴリ登録画面         | /categories/new                 | GET/POST     | 新規カテゴリの登録             |
-| カテゴリ編集画面         | /categories/{id}/edit           | GET/PUT      | 特定カテゴリの編集             |
+| カテゴリ編集画面         | /categories/{id}/edit           | GET/POST     | 特定カテゴリの編集             |
 | カテゴリ削除確認画面     | /categories/{id}/delete         | GET          | カテゴリ削除の確認             |
-| カテゴリ削除完了画面     | /categories/{id}                | DELETE       | カテゴリ削除の実行・完了       |
+| カテゴリ削除完了画面     | /categories/{id}/delete         | POST         | カテゴリ削除の実行・完了       |
 | 予算設定画面             | /budgets                        | GET/POST     | 月次予算の設定・管理           |
 | カテゴリ別・予算登録画面 | /budgets/categories/new         | GET/POST     | カテゴリ別予算の新規登録       |
-| カテゴリ別・予算編集画面 | /budgets/categories/{id}/edit   | GET/PUT      | カテゴリ別予算の編集           |
+| カテゴリ別・予算編集画面 | /budgets/categories/{id}/edit   | GET/POST     | カテゴリ別予算の編集           |
 | カテゴリ別・予算削除確認 | /budgets/categories/{id}/delete | GET          | カテゴリ別予算削除の確認       |
-| カテゴリ別・予算削除完了 | /budgets/categories/{id}        | DELETE       | カテゴリ別予算削除の実行・完了 |
+| カテゴリ別・予算削除完了 | /budgets/categories/{id}/delete | POST         | カテゴリ別予算削除の実行・完了 |
 | レポート画面             | /reports                        | GET          | 支出分析・グラフ表示           |
 | 設定画面                 | /settings                       | GET/POST     | アプリ設定                     |
 
 ## 画面設計原則
 
-### RESTful設計ガイドライン
+### HTTP メソッド設計ガイドライン
 
 - **GET**: リソースの取得・表示画面
-- **POST**: リソースの新規作成
-- **PUT**: リソースの更新・編集
-- **DELETE**: リソースの削除
+- **POST**: リソースの新規作成・更新・削除のすべての処理
 
 ### URL設計規則
 
