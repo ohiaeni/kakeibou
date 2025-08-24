@@ -1,19 +1,19 @@
 {
   "cSpell.words": [
-    "kakeibou",
-    "Vuetify",
-    "Noto",
+    "Batis",
+    "Configurer",
     "jdbc",
+    "JSESSIONID",
+    "kakeibou",
+    "Noto",
+    "ohiaeni",
     "testdb",
     "testuser",
-    "VARCHAR",
-    "Batis",
-    "Thymeleaf",
-    "JSESSIONID",
     "textlint",
-    "Configurer",
+    "Thymeleaf",
     "utext",
-    "ohiaeni"
+    "VARCHAR",
+    "Vuetify"
   ],
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
