@@ -6,6 +6,25 @@ export default withMermaid(
     title: "家計簿アプリ設計書",
     description: "家計簿アプリの設計・開発ドキュメント",
     lang: "ja",
+    base: "/kakeibou/",
+    cleanUrls: true,
+    lastUpdated: true,
+    head: [
+      ["meta", { property: "og:type", content: "website" }],
+      ["meta", { property: "og:title", content: "家計簿アプリ設計書" }],
+      [
+        "meta",
+        {
+          property: "og:description",
+          content: "家計簿アプリの設計・開発ドキュメント",
+        },
+      ],
+      [
+        "meta",
+        { property: "og:url", content: "https://ohiaeni.github.io/kakeibou/" },
+      ],
+      ["meta", { name: "theme-color", content: "#646cff" }],
+    ],
     mermaid: {
       // Mermaidの設定をカスタマイズ
     },
