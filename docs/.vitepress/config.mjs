@@ -88,8 +88,8 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                       {
-                        text: "ダッシュボード",
-                        link: "/02_画面要件定義/ダッシュボード",
+                        text: "ダッシュボード画面",
+                        link: "/02_画面要件定義/ダッシュボード画面",
                       },
                     ],
                   },
