@@ -1,5 +1,14 @@
 {
-  "cSpell.words": ["kakeibou"],
+  "cSpell.words": [
+    "kakeibou",
+    "Vuetify",
+    "Noto",
+    "jdbc",
+    "testdb",
+    "testuser",
+    "VARCHAR",
+    "Batis"
+  ],
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
       "text": "必ず日本語で記述してください。"
