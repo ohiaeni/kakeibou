@@ -7,7 +7,9 @@
     "testdb",
     "testuser",
     "VARCHAR",
-    "Batis"
+    "Batis",
+    "Thymeleaf",
+    "JSESSIONID"
   ],
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
