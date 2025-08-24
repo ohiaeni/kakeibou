@@ -46,6 +46,7 @@ export default withMermaid(
                 text: "設計関連",
                 collapsed: false,
                 items: [
+                  { text: "概要", link: "/00_設計関連/" },
                   {
                     text: "アーキテクチャ設計",
                     link: "/00_設計関連/アーキテクチャ設計",
@@ -80,6 +81,10 @@ export default withMermaid(
                       {
                         text: "ユーザー登録画面",
                         link: "/02_画面要件定義/ユーザー登録画面",
+                      },
+                      {
+                        text: "ログアウト確認画面",
+                        link: "/02_画面要件定義/ログアウト確認画面",
                       },
                     ],
                   },
@@ -123,6 +128,10 @@ export default withMermaid(
                     text: "カテゴリ管理",
                     collapsed: true,
                     items: [
+                      {
+                        text: "カテゴリ一覧画面",
+                        link: "/02_画面要件定義/カテゴリ一覧画面",
+                      },
                       {
                         text: "カテゴリ登録画面",
                         link: "/02_画面要件定義/カテゴリ登録画面",
@@ -185,6 +194,14 @@ export default withMermaid(
                         text: "設定画面",
                         link: "/02_画面要件定義/設定画面",
                       },
+                      {
+                        text: "プロフィール編集画面",
+                        link: "/02_画面要件定義/プロフィール編集画面",
+                      },
+                      {
+                        text: "パスワード変更画面",
+                        link: "/02_画面要件定義/パスワード変更画面",
+                      },
                     ],
                   },
                 ],
@@ -198,6 +215,7 @@ export default withMermaid(
                 text: "開発関連",
                 collapsed: false,
                 items: [
+                  { text: "概要", link: "/01_開発関連/" },
                   { text: "テスト戦略", link: "/01_開発関連/テスト戦略" },
                 ],
               },
