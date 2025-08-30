@@ -25,5 +25,5 @@
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "cSpell.words": ["Nuxt"]
+  "cSpell.words": ["Nuxt", "vuetify"]
 }
