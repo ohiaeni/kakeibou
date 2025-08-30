@@ -13,11 +13,11 @@ const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
       <v-col
         v-for="budgetWithCategory in budgetsWithCategories"
         :key="budgetWithCategory.budget_id"
-        cols="6"
+        cols="4"
         sm="4"
         md="4"
-        lg="3"
-        xl="3"
+        lg="4"
+        xl="4"
       >
         <CategoryItem
           :id="budgetWithCategory.category.category_id"
