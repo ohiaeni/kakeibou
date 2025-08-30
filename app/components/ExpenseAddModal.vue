@@ -142,13 +142,13 @@ const handleClose = () => {
     :fullscreen="$vuetify.display.xs"
     persistent
   >
-    <v-card class="expense-modal">
+    <v-card class="h-100" style="max-height: 90vh;">
       <!-- ヘッダー -->
-      <v-card-title class="modal-header">
-        <v-icon class="header-icon" color="primary">
+      <v-card-title class="d-flex align-center ga-2 pa-5 pa-sm-6 text-h6 font-weight-bold">
+        <v-icon color="primary" class="mr-1">
           mdi-plus
         </v-icon>
-        <span class="header-title">支出を追加</span>
+        <span>支出を追加</span>
         <v-spacer />
         <v-btn
           icon="mdi-close"
@@ -161,14 +161,14 @@ const handleClose = () => {
       <v-divider />
 
       <!-- フォーム内容 -->
-      <v-card-text class="modal-content">
+      <v-card-text class="pa-5 pa-sm-6" style="max-height: 60vh; overflow-y: auto;">
         <v-form v-model="isFormValid">
           <!-- よく使うカテゴリ -->
-          <div v-if="frequentCategories.length > 0" class="section">
-            <div class="section-title">
+          <div v-if="frequentCategories.length > 0" class="mb-6">
+            <div class="text-body-1 font-weight-bold text-on-surface mb-3">
               よく使うカテゴリ
             </div>
-            <div class="category-chips">
+            <div class="d-flex flex-wrap ga-2 mb-4">
               <v-chip
                 v-for="budget in frequentCategories"
                 :key="budget.category.category_id"
@@ -176,8 +176,10 @@ const handleClose = () => {
                 variant="outlined"
                 size="small"
                 clickable
-                class="category-chip"
+                style="transition: transform 0.2s ease;"
                 @click="expenseForm.category_id = budget.category.category_id"
+                @mouseenter="($event.target as HTMLElement).style.transform = 'scale(1.05)'"
+                @mouseleave="($event.target as HTMLElement).style.transform = 'scale(1)'"
               >
                 <v-icon start :icon="budget.category.icon" />
                 {{ budget.category.name }}
@@ -186,7 +188,7 @@ const handleClose = () => {
           </div>
 
           <!-- カテゴリ選択 -->
-          <div class="section">
+          <div class="mb-6">
             <v-select
               v-model="expenseForm.category_id"
               label="カテゴリ"
@@ -196,7 +198,7 @@ const handleClose = () => {
               item-value="category_id"
               required
               :rules="[rules.category]"
-              class="form-field"
+              class="mb-2"
             >
               <template #selection="{ item }">
                 <div class="d-flex align-center">
@@ -220,7 +222,7 @@ const handleClose = () => {
               </template>
             </v-select>
 
-            <div class="helper-text">
+            <div class="text-caption text-on-surface mt-1 mb-2">
               ※ 予算が設定されているカテゴリのみ表示されます
             </div>
 
@@ -230,7 +232,7 @@ const handleClose = () => {
               type="info"
               variant="tonal"
               density="compact"
-              class="budget-alert"
+              class="mt-3"
             >
               <div class="text-body-2">
                 他のカテゴリを使用したい場合は、先に予算を設定してください
@@ -239,7 +241,7 @@ const handleClose = () => {
           </div>
 
           <!-- 金額と日付 -->
-          <v-row class="section">
+          <v-row class="mb-6">
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model.number="expenseForm.amount"
@@ -251,28 +253,30 @@ const handleClose = () => {
                 step="1"
                 required
                 :rules="[rules.required, rules.amount]"
-                class="form-field"
+                class="mb-2"
               />
 
               <!-- クイック金額選択 -->
-              <div class="quick-amounts">
-                <div class="quick-amounts-label">
+              <div class="mt-4">
+                <div class="text-body-2 font-weight-medium text-on-surface mb-2">
                   クイック選択
                 </div>
-                <div class="quick-amounts-grid">
+                <div class="d-flex flex-wrap justify-center ga-2 mb-2">
                   <v-chip
                     v-for="amount in [500, 1000, 2000, 3000, 5000, 10000]"
                     :key="amount"
                     variant="outlined"
                     size="small"
                     clickable
-                    class="quick-amount-chip"
+                    style="transition: all 0.2s ease; user-select: none;"
                     @pointerdown="handleAmountSelect(amount, $event)"
+                    @mouseenter="($event.target as HTMLElement).style.transform = 'scale(1.05)'"
+                    @mouseleave="($event.target as HTMLElement).style.transform = 'scale(1)'"
                   >
                     ¥{{ amount.toLocaleString() }}
                   </v-chip>
                 </div>
-                <div class="quick-amounts-help">
+                <div class="text-caption text-on-surface text-center">
                   タップで加算、長押しで減算
                 </div>
               </div>
@@ -286,20 +290,20 @@ const handleClose = () => {
                 variant="outlined"
                 required
                 :rules="[rules.required]"
-                class="form-field"
+                class="mb-2"
               />
             </v-col>
           </v-row>
 
           <!-- メモ入力 -->
-          <div class="section">
+          <div class="mb-6">
             <v-textarea
               v-model="expenseForm.note"
               label="メモ（任意）"
               variant="outlined"
               rows="3"
               placeholder="例：スーパーで食材購入、電車代など"
-              class="form-field"
+              class="mb-2"
             />
           </div>
         </v-form>
@@ -308,212 +312,37 @@ const handleClose = () => {
       <v-divider />
 
       <!-- フッター（アクションボタン） -->
-      <v-card-actions class="modal-actions">
+      <v-card-actions class="d-flex ga-2 pa-4 pa-sm-6 flex-column flex-sm-row">
+        <!-- モバイル表示でリセットボタンを下に配置 -->
         <v-btn
           color="grey"
           variant="outlined"
+          class="order-2 order-sm-0 w-100 w-sm-auto mt-2 mt-sm-0"
           @click="resetForm"
         >
           リセット
         </v-btn>
-        <v-spacer />
-        <v-btn
-          color="grey"
-          variant="text"
-          @click="handleClose"
-        >
-          キャンセル
-        </v-btn>
-        <v-btn
-          color="primary"
-          variant="elevated"
-          :disabled="!isFormValid || !expenseForm.category_id || !expenseForm.amount || !expenseForm.spent_at"
-          @click="saveExpense"
-        >
-          保存
-        </v-btn>
+        <v-spacer class="d-none d-sm-flex" />
+        <div class="d-flex ga-2 order-1 order-sm-0 w-100 w-sm-auto">
+          <v-btn
+            color="grey"
+            variant="text"
+            class="flex-fill flex-sm-grow-0"
+            @click="handleClose"
+          >
+            キャンセル
+          </v-btn>
+          <v-btn
+            color="primary"
+            variant="elevated"
+            class="flex-fill flex-sm-grow-0 ml-2"
+            :disabled="!isFormValid || !expenseForm.category_id || !expenseForm.amount || !expenseForm.spent_at"
+            @click="saveExpense"
+          >
+            保存
+          </v-btn>
+        </div>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
-
-<style scoped>
-.expense-modal {
-  max-height: 90vh;
-}
-
-/* ヘッダー */
-.modal-header {
-  padding: 20px 24px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.header-icon {
-  margin-right: 4px;
-}
-
-.header-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-/* コンテンツ */
-.modal-content {
-  padding: 20px 24px;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-.section {
-  margin-bottom: 24px;
-}
-
-.section:last-child {
-  margin-bottom: 0;
-}
-
-.section-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 12px;
-}
-
-/* カテゴリチップ */
-.category-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.category-chip {
-  transition: transform 0.2s ease;
-}
-
-.category-chip:hover {
-  transform: scale(1.05);
-}
-
-/* フォーム要素 */
-.form-field {
-  margin-bottom: 8px;
-}
-
-.helper-text {
-  font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface));
-  margin-top: 4px;
-  margin-bottom: 8px;
-}
-
-.budget-alert {
-  margin-top: 12px;
-}
-
-/* クイック金額選択 */
-.quick-amounts {
-  margin-top: 16px;
-}
-
-.quick-amounts-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 8px;
-}
-
-.quick-amounts-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.quick-amount-chip {
-  transition: all 0.2s ease;
-  user-select: none;
-}
-
-.quick-amount-chip:hover {
-  transform: scale(1.05);
-}
-
-.quick-amount-chip:active {
-  transform: scale(0.95);
-}
-
-.quick-amounts-help {
-  font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface));
-  text-align: center;
-}
-
-/* フッター */
-.modal-actions {
-  padding: 16px 24px;
-  gap: 8px;
-}
-
-/* モバイル表示の最適化 */
-@media (max-width: 599px) {
-  .modal-header {
-    padding: 16px 20px 12px;
-    font-size: 1.1rem;
-  }
-
-  .header-title {
-    font-size: 1.1rem;
-  }
-
-  .modal-content {
-    padding: 16px 20px;
-  }
-
-  .modal-actions {
-    padding: 12px 20px;
-    flex-wrap: wrap;
-  }
-
-  .modal-actions > .v-btn:first-child {
-    order: 3;
-    width: 100%;
-    margin-top: 8px;
-  }
-
-  .modal-actions > .v-spacer {
-    display: none;
-  }
-
-  .modal-actions > .v-btn:nth-child(3) {
-    order: 1;
-    flex: 1;
-  }
-
-  .modal-actions > .v-btn:last-child {
-    order: 2;
-    flex: 1;
-    margin-left: 8px;
-  }
-
-  .preview-main {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .preview-left {
-    width: 100%;
-  }
-
-  .preview-amount {
-    align-self: flex-end;
-    font-size: 1.1rem;
-  }
-}
-</style>

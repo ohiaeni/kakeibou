@@ -34,37 +34,43 @@ const handleClearLocalData = () => {
 </script>
 
 <template>
-  <v-container class="home-container">
+  <v-container class="pa-4 pa-sm-6 mx-auto" style="max-width: 1200px;">
     <!-- メインアクションエリア -->
-    <div class="main-actions">
+    <div class="d-flex justify-center align-center ga-6 ga-sm-8 ga-md-10 mb-8 mb-sm-10 mb-md-12 pa-6 pa-sm-8 pa-md-10">
       <!-- 主要アクション: 支出を追加 -->
-      <div class="action-item primary-action">
+      <div class="d-flex flex-column align-center ga-3" style="min-width: 100px;">
         <v-btn
           color="primary"
           variant="tonal"
           rounded="xl"
           size="large"
           icon="mdi-plus"
-          class="action-btn primary-btn"
+          class="elevation-2"
+          style="width: 70px; height: 70px; transition: all 0.3s ease;"
           @click="openExpenseModal"
+          @mouseenter="$event.target.style.transform = 'translateY(-2px)'"
+          @mouseleave="$event.target.style.transform = 'translateY(0)'"
         />
-        <div class="action-label">
+        <div class="text-body-2 font-weight-medium text-primary text-center">
           支出を追加
         </div>
       </div>
 
       <!-- 補助アクション: ダッシュボード -->
-      <div class="action-item secondary-action">
+      <div class="d-flex flex-column align-center ga-3" style="min-width: 100px;">
         <v-btn
           color="surface-variant"
           variant="tonal"
           rounded="xl"
           size="large"
           icon="mdi-chart-line"
-          class="action-btn secondary-btn"
+          class="elevation-2"
+          style="width: 70px; height: 70px; transition: all 0.3s ease;"
           to="/dashboard"
+          @mouseenter="$event.target.style.transform = 'translateY(-2px)'"
+          @mouseleave="$event.target.style.transform = 'translateY(0)'"
         />
-        <div class="action-label">
+        <div class="text-body-2 font-weight-medium text-on-surface text-center">
           ダッシュボード
         </div>
       </div>
@@ -98,179 +104,19 @@ const handleClearLocalData = () => {
     </v-snackbar>
 
     <!-- デバッグ用削除ボタン（開発環境のみ表示） -->
-    <div v-if="isDevelopment" class="debug-section">
+    <div v-if="isDevelopment" class="d-flex justify-center mt-12 pt-6" style="border-top: 1px solid rgb(var(--v-theme-surface-variant));">
       <v-btn
         color="error"
         variant="outlined"
         prepend-icon="mdi-delete-sweep"
         size="small"
-        class="debug-btn"
+        style="opacity: 0.7; transition: opacity 0.2s ease;"
         @click="handleClearLocalData"
+        @mouseenter="$event.target.style.opacity = '1'"
+        @mouseleave="$event.target.style.opacity = '0.7'"
       >
         🔧 ローカルデータを削除 (Debug)
       </v-btn>
     </div>
   </v-container>
 </template>
-
-<style scoped>
-/* コンテナ */
-.home-container {
-  padding: 16px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* メインアクション */
-.main-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 32px;
-  padding: 24px 16px;
-}
-
-.action-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  min-width: 100px;
-}
-
-.action-btn {
-  width: 70px;
-  height: 70px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.primary-btn {
-  width: 80px;
-  height: 80px;
-}
-
-.action-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgb(var(--v-theme-on-surface));
-  text-align: center;
-  line-height: 1.2;
-}
-
-.primary-action .action-label {
-  font-weight: 600;
-  color: rgb(var(--v-theme-primary));
-}
-
-/* デバッグセクション */
-.debug-section {
-  display: flex;
-  justify-content: center;
-  margin-top: 48px;
-  padding-top: 24px;
-  border-top: 1px solid rgb(var(--v-theme-surface-variant));
-}
-
-.debug-btn {
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
-}
-
-.debug-btn:hover {
-  opacity: 1;
-}
-
-/* モバイル表示の最適化 */
-@media (max-width: 599px) {
-  .home-container {
-    padding: 12px;
-  }
-
-  .main-actions {
-    gap: 20px;
-    margin-bottom: 24px;
-    padding: 20px 12px;
-  }
-
-  .action-btn {
-    width: 60px;
-    height: 60px;
-  }
-
-  .primary-btn {
-    width: 70px;
-    height: 70px;
-  }
-
-  .action-label {
-    font-size: 0.8rem;
-  }
-
-  .debug-section {
-    margin-top: 32px;
-    padding-top: 20px;
-  }
-}
-
-/* タブレット表示の最適化 */
-@media (min-width: 600px) and (max-width: 959px) {
-  .main-actions {
-    gap: 32px;
-    margin-bottom: 40px;
-    padding: 32px 20px;
-  }
-
-  .action-btn {
-    width: 75px;
-    height: 75px;
-  }
-
-  .primary-btn {
-    width: 85px;
-    height: 85px;
-  }
-
-  .action-label {
-    font-size: 0.9rem;
-  }
-}
-
-/* デスクトップ表示の最適化 */
-@media (min-width: 960px) {
-  .home-container {
-    padding: 24px;
-  }
-
-  .main-actions {
-    gap: 40px;
-    margin-bottom: 48px;
-    padding: 40px 24px;
-  }
-
-  .action-btn {
-    width: 80px;
-    height: 80px;
-  }
-
-  .primary-btn {
-    width: 90px;
-    height: 90px;
-  }
-
-  .action-label {
-    font-size: 1rem;
-  }
-
-  .debug-section {
-    margin-top: 64px;
-    padding-top: 32px;
-  }
-}
-</style>

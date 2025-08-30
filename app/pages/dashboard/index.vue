@@ -103,17 +103,17 @@ const _chartData = computed(() => {
 <template>
   <v-container>
     <!-- ヘッダー -->
-    <div class="dashboard-header mb-6">
-      <div class="header-text">
-        <h1 class="dashboard-title">
+    <div class="d-flex align-center justify-space-between flex-wrap ga-4 mb-6">
+      <div class="flex-grow-1" style="min-width: 200px;">
+        <h1 class="text-h4 text-lg-h3 font-weight-bold" style="line-height: 1.2;">
           ダッシュボード
         </h1>
-        <p class="dashboard-subtitle">
+        <p class="text-body-1 text-on-surface mt-1">
           {{ currentYear }}年{{ currentMonth }}月の家計状況
         </p>
       </div>
       <v-btn
-        class="header-btn"
+        class="flex-shrink-0 w-100 w-sm-auto justify-center"
         variant="outlined"
         prepend-icon="mdi-arrow-left"
         to="/"
@@ -204,10 +204,10 @@ const _chartData = computed(() => {
       <!-- カテゴリ別支出ランキング -->
       <v-col cols="12" lg="6">
         <v-card class="h-100">
-          <v-card-title class="card-title">
+          <div class="pa-4 pb-2 text-body-1 font-weight-bold">
             <v-icon icon="mdi-trophy" class="me-2" />
             支出ランキング
-          </v-card-title>
+          </div>
           <v-card-text>
             <div v-if="budgetsWithCategories.length === 0" class="text-center py-8">
               <v-icon icon="mdi-chart-bar" size="64" class="text-medium-emphasis mb-4" />
@@ -222,10 +222,11 @@ const _chartData = computed(() => {
                   .sort((a, b) => b.current_expense - a.current_expense)
                   .slice(0, 5)"
                 :key="budget.budget_id"
-                class="ranking-item"
+                class="d-flex align-center py-3 ga-3"
                 :class="{ 'border-b': index < 4 }"
+                :style="{ borderBottomColor: 'rgb(var(--v-theme-surface-variant))' }"
               >
-                <div class="ranking-number">
+                <div class="text-center flex-shrink-0" style="min-width: 32px;">
                   <span class="text-h6 font-weight-bold text-primary">
                     {{ index + 1 }}
                   </span>
@@ -233,24 +234,24 @@ const _chartData = computed(() => {
                 <v-icon
                   :icon="budget.category.icon"
                   :color="budget.category.color"
-                  class="ranking-icon"
+                  class="flex-shrink-0"
                 />
-                <div class="ranking-content">
-                  <div class="ranking-header">
-                    <span class="ranking-name">{{ budget.category.name }}</span>
-                    <span class="ranking-amount">
+                <div class="flex-grow-1" style="min-width: 0;">
+                  <div class="d-flex align-center justify-space-between ga-2 flex-wrap">
+                    <span class="font-weight-medium flex-grow-1 text-truncate">{{ budget.category.name }}</span>
+                    <span class="font-weight-bold text-body-1 flex-shrink-0">
                       ¥{{ budget.current_expense.toLocaleString() }}
                     </span>
                   </div>
-                  <div v-if="budget.amount > 0" class="ranking-progress">
+                  <div v-if="budget.amount > 0" class="d-flex align-center mt-2 ga-2">
                     <v-progress-linear
                       :model-value="Math.min(budget.usage_percentage, 100)"
                       :color="budget.usage_percentage > 100 ? 'error' : 'primary'"
                       height="4"
                       rounded
-                      class="progress-bar"
+                      class="flex-grow-1"
                     />
-                    <span class="progress-text">
+                    <span class="text-caption text-on-surface flex-shrink-0 text-right" style="min-width: 40px;">
                       {{ budget.usage_percentage }}%
                     </span>
                   </div>
@@ -264,10 +265,10 @@ const _chartData = computed(() => {
       <!-- アラートとアドバイス -->
       <v-col cols="12" lg="6">
         <v-card class="h-100">
-          <v-card-title class="card-title">
+          <div class="pa-4 pb-2 text-body-1 font-weight-bold">
             <v-icon icon="mdi-alert-circle" class="me-2" />
             アラート & アドバイス
-          </v-card-title>
+          </div>
           <v-card-text>
             <!-- 予算超過アラート -->
             <div v-if="overBudgetCategories.length > 0" class="mb-4">
@@ -377,10 +378,10 @@ const _chartData = computed(() => {
 
     <!-- 最近の支出リスト -->
     <v-card class="mt-6">
-      <v-card-title class="card-title">
+      <div class="pa-4 pb-2 text-body-1 font-weight-bold">
         <v-icon icon="mdi-history" class="me-2" />
         最近の支出
-      </v-card-title>
+      </div>
       <v-card-text>
         <div v-if="recentExpenses.length === 0" class="text-center py-8">
           <v-icon icon="mdi-receipt" size="64" class="text-medium-emphasis mb-4" />
@@ -403,7 +404,7 @@ const _chartData = computed(() => {
               v-for="(expense, index) in recentExpenses"
               :key="expense.expense_id"
             >
-              <v-list-item class="expense-item">
+              <v-list-item class="py-3">
                 <template #prepend>
                   <v-avatar :color="expense.category?.color || 'primary'" size="40">
                     <v-icon
@@ -417,13 +418,13 @@ const _chartData = computed(() => {
                   {{ expense.category?.name || '不明' }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  <div class="expense-details">
-                    <span class="expense-date">{{ expense.spent_at }}</span>
-                    <span class="expense-amount">
+                  <div class="d-flex align-center justify-space-between ga-2 flex-wrap">
+                    <span class="text-body-2 text-on-surface">{{ expense.spent_at }}</span>
+                    <span class="font-weight-bold text-error text-body-1 flex-shrink-0">
                       -¥{{ expense.amount.toLocaleString() }}
                     </span>
                   </div>
-                  <div v-if="expense.note" class="expense-note">
+                  <div v-if="expense.note" class="text-caption text-on-surface mt-1" style="line-height: 1.3;">
                     {{ expense.note }}
                   </div>
                 </v-list-item-subtitle>
@@ -473,211 +474,3 @@ const _chartData = computed(() => {
     </v-snackbar>
   </v-container>
 </template>
-
-<style scoped>
-.border-b {
-  border-bottom: 1px solid rgb(var(--v-theme-surface-variant));
-}
-
-/* ヘッダーのレスポンシブ対応 */
-.dashboard-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.header-text {
-  flex: 1;
-  min-width: 200px;
-}
-
-.dashboard-title {
-  font-size: 1.75rem;
-  font-weight: bold;
-  line-height: 1.2;
-}
-
-.dashboard-subtitle {
-  font-size: 1rem;
-  color: rgb(var(--v-theme-on-surface));
-  margin-top: 4px;
-}
-
-.header-btn {
-  flex-shrink: 0;
-}
-
-/* カードタイトルの統一 */
-.card-title {
-  padding: 16px 16px 8px 16px;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-/* 支出ランキングのレスポンシブ対応 */
-.ranking-item {
-  display: flex;
-  align-items: center;
-  padding: 12px 0;
-  gap: 12px;
-}
-
-.ranking-number {
-  text-align: center;
-  min-width: 32px;
-  flex-shrink: 0;
-}
-
-.ranking-icon {
-  flex-shrink: 0;
-}
-
-.ranking-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.ranking-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.ranking-name {
-  font-weight: 500;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ranking-amount {
-  font-weight: bold;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-}
-
-.ranking-progress {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
-  gap: 8px;
-}
-
-.progress-bar {
-  flex: 1;
-}
-
-.progress-text {
-  font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface));
-  flex-shrink: 0;
-  min-width: 40px;
-  text-align: right;
-}
-
-/* 支出リストのレスポンシブ対応 */
-.expense-item {
-  padding: 12px 0;
-}
-
-.expense-details {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.expense-date {
-  font-size: 0.875rem;
-  color: rgb(var(--v-theme-on-surface));
-}
-
-.expense-amount {
-  font-weight: bold;
-  color: rgb(var(--v-theme-error));
-  font-size: 0.95rem;
-  flex-shrink: 0;
-}
-
-.expense-note {
-  font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface));
-  margin-top: 4px;
-  line-height: 1.3;
-}
-
-/* モバイル表示の最適化 */
-@media (max-width: 599px) {
-  .dashboard-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
-  .header-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .dashboard-title {
-    font-size: 1.5rem;
-  }
-
-  .dashboard-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .ranking-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-
-  .ranking-amount {
-    align-self: flex-end;
-  }
-
-  .expense-details {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-
-  .expense-amount {
-    align-self: flex-end;
-  }
-}
-
-/* タブレット表示の最適化 */
-@media (min-width: 600px) and (max-width: 959px) {
-  .dashboard-title {
-    font-size: 1.6rem;
-  }
-
-  .ranking-item {
-    padding: 10px 0;
-  }
-}
-
-/* デスクトップ表示の最適化 */
-@media (min-width: 1264px) {
-  .dashboard-header {
-    margin-bottom: 32px;
-  }
-
-  .dashboard-title {
-    font-size: 2rem;
-  }
-
-  .ranking-item {
-    padding: 14px 0;
-  }
-}
-</style>
