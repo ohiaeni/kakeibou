@@ -1,0 +1,466 @@
+export interface User {
+  user_id: number
+  username: string
+  email?: string
+  password_hash: string
+  created_at: string
+  updated_at: string
+}
+
+export interface Category {
+  category_id: number
+  user_id: number
+  name: string
+  description?: string
+  icon: string
+  color?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface Budget {
+  budget_id: number
+  user_id: number
+  category_id: number
+  amount: number
+  year: number
+  month: number
+  created_at: string
+  updated_at: string
+}
+
+export interface Expense {
+  expense_id: number
+  user_id: number
+  category_id: number
+  amount: number
+  spent_at: string
+  note?: string
+  created_at: string
+  updated_at: string
+}
+
+// 表示用のデータ構造
+export interface BudgetWithCategory {
+  budget_id: number
+  user_id: number
+  category: Category
+  amount: number
+  year: number
+  month: number
+  created_at: string
+  updated_at: string
+  current_expense: number
+  usage_percentage: number
+  remaining_amount: number
+}
+
+export const useBudgets = () => {
+  // 現在のユーザーID（本来は認証システムから取得）
+  const currentUserId = ref(1)
+
+  // 現在の年月
+  const currentYear = ref(new Date().getFullYear())
+  const currentMonth = ref(new Date().getMonth() + 1)
+
+  // サンプルカテゴリデータ
+  const categories = ref<Category[]>([
+    {
+      category_id: 1,
+      user_id: 1,
+      name: '食費',
+      description: '食材費、外食費など',
+      icon: 'mdi-food',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 2,
+      user_id: 1,
+      name: '交通費',
+      description: '電車賃、ガソリン代など',
+      icon: 'mdi-train',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 3,
+      user_id: 1,
+      name: '娯楽',
+      description: '映画、ゲーム、レジャーなど',
+      icon: 'mdi-movie',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 4,
+      user_id: 1,
+      name: '光熱費',
+      description: '電気代、ガス代、水道代',
+      icon: 'mdi-lightning-bolt',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 5,
+      user_id: 1,
+      name: '通信費',
+      description: '携帯代、インターネット代',
+      icon: 'mdi-cellphone',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 6,
+      user_id: 1,
+      name: '医療費',
+      description: '病院代、薬代など',
+      icon: 'mdi-medical-bag',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 7,
+      user_id: 1,
+      name: '衣類',
+      description: '服、靴、アクセサリーなど',
+      icon: 'mdi-tshirt-crew',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 8,
+      user_id: 1,
+      name: '美容',
+      description: '化粧品、美容院など',
+      icon: 'mdi-face-woman',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+    {
+      category_id: 9,
+      user_id: 1,
+      name: 'その他',
+      description: 'その他の支出',
+      icon: 'mdi-dots-horizontal',
+      color: 'primary',
+      created_at: '2025-01-01T00:00:00Z',
+      updated_at: '2025-01-01T00:00:00Z',
+    },
+  ])
+
+  // サンプル予算データ
+  const budgets = ref<Budget[]>([
+    {
+      budget_id: 1,
+      user_id: 1,
+      category_id: 1,
+      amount: 50000,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
+    {
+      budget_id: 2,
+      user_id: 1,
+      category_id: 2,
+      amount: 15000,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
+    {
+      budget_id: 3,
+      user_id: 1,
+      category_id: 3,
+      amount: 20000,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
+    {
+      budget_id: 4,
+      user_id: 1,
+      category_id: 4,
+      amount: 12000,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
+    {
+      budget_id: 5,
+      user_id: 1,
+      category_id: 5,
+      amount: 8000,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
+  ])
+
+  // サンプル支出データ
+  const expenses = ref<Expense[]>([
+    {
+      expense_id: 1,
+      user_id: 1,
+      category_id: 1,
+      amount: 32500,
+      spent_at: '2025-08-15',
+      note: '食材費など',
+      created_at: '2025-08-15T00:00:00Z',
+      updated_at: '2025-08-15T00:00:00Z',
+    },
+    {
+      expense_id: 2,
+      user_id: 1,
+      category_id: 2,
+      amount: 4500,
+      spent_at: '2025-08-10',
+      note: '電車代',
+      created_at: '2025-08-10T00:00:00Z',
+      updated_at: '2025-08-10T00:00:00Z',
+    },
+    {
+      expense_id: 3,
+      user_id: 1,
+      category_id: 3,
+      amount: 17000,
+      spent_at: '2025-08-20',
+      note: '映画・レジャー',
+      created_at: '2025-08-20T00:00:00Z',
+      updated_at: '2025-08-20T00:00:00Z',
+    },
+  ])
+
+  // 指定された年月の予算一覧を取得（カテゴリ情報付き）
+  const getBudgetsWithCategories = (year: number = currentYear.value, month: number = currentMonth.value): BudgetWithCategory[] => {
+    return budgets.value
+      .filter(budget => budget.year === year && budget.month === month && budget.user_id === currentUserId.value)
+      .map((budget) => {
+        const category = categories.value.find(c => c.category_id === budget.category_id)
+        if (!category) return null
+
+        // 該当する支出を計算
+        const currentExpense = expenses.value
+          .filter(expense =>
+            expense.category_id === budget.category_id
+            && expense.user_id === currentUserId.value
+            && new Date(expense.spent_at).getFullYear() === year
+            && new Date(expense.spent_at).getMonth() + 1 === month,
+          )
+          .reduce((sum, expense) => sum + expense.amount, 0)
+
+        const usagePercentage = Math.round((currentExpense / budget.amount) * 100)
+        const remainingAmount = budget.amount - currentExpense
+
+        return {
+          budget_id: budget.budget_id,
+          user_id: budget.user_id,
+          category,
+          amount: budget.amount,
+          year: budget.year,
+          month: budget.month,
+          created_at: budget.created_at,
+          updated_at: budget.updated_at,
+          current_expense: currentExpense,
+          usage_percentage: usagePercentage,
+          remaining_amount: remainingAmount,
+        }
+      })
+      .filter(Boolean) as BudgetWithCategory[]
+  }
+
+  // 全カテゴリを9件表示（予算未設定も含む）
+  const getAllCategoriesWithBudgets = (year: number = currentYear.value, month: number = currentMonth.value): BudgetWithCategory[] => {
+    const userCategories = categories.value.filter(category => category.user_id === currentUserId.value)
+    const existingBudgets = getBudgetsWithCategories(year, month)
+
+    // 予算が設定されているカテゴリのIDリスト
+    const budgetCategoryIds = existingBudgets.map(budget => budget.category.category_id)
+
+    // 予算未設定のカテゴリを取得
+    const unbadgetedCategories = userCategories
+      .filter(category => !budgetCategoryIds.includes(category.category_id))
+      .map((category) => {
+        // 該当する支出を計算
+        const currentExpense = expenses.value
+          .filter(expense =>
+            expense.category_id === category.category_id
+            && expense.user_id === currentUserId.value
+            && new Date(expense.spent_at).getFullYear() === year
+            && new Date(expense.spent_at).getMonth() + 1 === month,
+          )
+          .reduce((sum, expense) => sum + expense.amount, 0)
+
+        return {
+          budget_id: 0, // 未設定を示すID
+          user_id: currentUserId.value,
+          category,
+          amount: 0, // 予算未設定
+          year,
+          month,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          current_expense: currentExpense,
+          usage_percentage: 0, // 予算未設定の場合は0%
+          remaining_amount: -currentExpense, // 予算がないので支出がマイナス表示
+        }
+      })
+
+    // 予算設定済み + 未設定のカテゴリを結合して9件に制限
+    const allBudgets = [...existingBudgets, ...unbadgetedCategories]
+    return allBudgets.slice(0, 9)
+  }
+
+  // カテゴリIDから予算を取得
+  const getBudgetByCategoryId = (categoryId: number, year: number = currentYear.value, month: number = currentMonth.value): BudgetWithCategory | null => {
+    const budgetsWithCategories = getBudgetsWithCategories(year, month)
+    return budgetsWithCategories.find(budget => budget.category.category_id === categoryId) || null
+  }
+
+  // カテゴリ一覧を取得
+  const getCategories = (): Category[] => {
+    return categories.value.filter(category => category.user_id === currentUserId.value)
+  }
+
+  // カテゴリIDからカテゴリを取得
+  const getCategoryById = (categoryId: number): Category | null => {
+    return categories.value.find(category => category.category_id === categoryId && category.user_id === currentUserId.value) || null
+  }
+
+  // 予算を更新
+  const updateBudget = (categoryId: number, amount: number, year: number = currentYear.value, month: number = currentMonth.value): void => {
+    const existingBudgetIndex = budgets.value.findIndex(
+      budget => budget.category_id === categoryId
+        && budget.year === year
+        && budget.month === month
+        && budget.user_id === currentUserId.value,
+    )
+
+    if (existingBudgetIndex !== -1) {
+      // 既存の予算を更新
+      const existingBudget = budgets.value[existingBudgetIndex]
+      if (existingBudget) {
+        existingBudget.amount = amount
+        existingBudget.updated_at = new Date().toISOString()
+      }
+    }
+    else {
+      // 新しい予算を作成
+      const newBudget: Budget = {
+        budget_id: Math.max(...budgets.value.map(b => b.budget_id)) + 1,
+        user_id: currentUserId.value,
+        category_id: categoryId,
+        amount,
+        year,
+        month,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+      budgets.value.push(newBudget)
+    }
+
+    // ローカルストレージに保存（実際のアプリケーションではAPIを使用）
+    if (import.meta.client) {
+      localStorage.setItem('budgets', JSON.stringify(budgets.value))
+    }
+  }
+
+  // カテゴリを更新
+  const updateCategory = (categoryId: number, name: string, description?: string, icon?: string, color?: string): void => {
+    const categoryIndex = categories.value.findIndex(category => category.category_id === categoryId && category.user_id === currentUserId.value)
+
+    if (categoryIndex !== -1) {
+      const category = categories.value[categoryIndex]
+      if (category) {
+        category.name = name
+        if (description !== undefined) category.description = description
+        if (icon !== undefined) category.icon = icon
+        if (color !== undefined) category.color = color
+        category.updated_at = new Date().toISOString()
+      }
+
+      // ローカルストレージに保存（実際のアプリケーションではAPIを使用）
+      if (import.meta.client) {
+        localStorage.setItem('categories', JSON.stringify(categories.value))
+      }
+    }
+  }
+
+  // 支出を追加
+  const addExpense = (categoryId: number, amount: number, spentAt: string, note?: string): void => {
+    const newExpense: Expense = {
+      expense_id: Math.max(...expenses.value.map(e => e.expense_id), 0) + 1,
+      user_id: currentUserId.value,
+      category_id: categoryId,
+      amount,
+      spent_at: spentAt,
+      note,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+
+    expenses.value.push(newExpense)
+
+    // ローカルストレージに保存
+    if (import.meta.client) {
+      localStorage.setItem('expenses', JSON.stringify(expenses.value))
+    }
+  }
+
+  // ローカルストレージからデータを復元
+  const loadFromStorage = (): void => {
+    if (import.meta.client) {
+      const savedBudgets = localStorage.getItem('budgets')
+      const savedExpenses = localStorage.getItem('expenses')
+      const savedCategories = localStorage.getItem('categories')
+
+      if (savedBudgets) {
+        budgets.value = JSON.parse(savedBudgets)
+      }
+
+      if (savedExpenses) {
+        expenses.value = JSON.parse(savedExpenses)
+      }
+
+      if (savedCategories) {
+        // カテゴリデータがローカルストレージにある場合は復元
+        const parsedCategories = JSON.parse(savedCategories)
+        categories.value.splice(0, categories.value.length, ...parsedCategories)
+      }
+    }
+  }
+
+  // 初期化
+  onMounted(() => {
+    loadFromStorage()
+  })
+
+  return {
+    currentUserId,
+    currentYear,
+    currentMonth,
+    getBudgetsWithCategories,
+    getAllCategoriesWithBudgets,
+    getBudgetByCategoryId,
+    getCategories,
+    getCategoryById,
+    updateBudget,
+    updateCategory,
+    addExpense,
+    loadFromStorage,
+  }
+}

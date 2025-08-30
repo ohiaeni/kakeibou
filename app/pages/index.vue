@@ -36,22 +36,6 @@
           ダッシュボード
         </div>
       </div>
-
-      <!-- 補助アクション: カテゴリ編集 -->
-      <div class="d-flex flex-column align-center" style="min-width: 100px;">
-        <v-btn
-          color="surface-variant"
-          variant="tonal"
-          rounded="xl"
-          size="large"
-          icon="mdi-pencil"
-          class="mb-2"
-          style="width: 70px; height: 70px;"
-        />
-        <div class="text-caption text-medium-emphasis text-center">
-          カテゴリ編集
-        </div>
-      </div>
     </div>
     <CategoryItemList />
   </v-container>
