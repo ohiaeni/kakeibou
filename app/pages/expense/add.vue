@@ -43,9 +43,6 @@ const hasUnbudgetedCategories = computed(() => {
   return totalCategories > budgetedCategories
 })
 
-// 金額のクイック入力オプション
-const quickAmounts = [100, 300, 500, 1000, 2000, 3000, 5000]
-
 // フォームの有効性
 const isFormValid = ref(false)
 
@@ -204,24 +201,6 @@ const resetForm = () => {
                 required
                 :rules="[rules.required, rules.amount]"
               />
-              <!-- クイック金額選択 -->
-              <div class="mt-2">
-                <div class="text-caption text-grey-darken-1 mb-2">
-                  クイック選択
-                </div>
-                <div class="d-flex flex-wrap gap-1">
-                  <v-btn
-                    v-for="amount in quickAmounts"
-                    :key="amount"
-                    size="x-small"
-                    variant="outlined"
-                    color="primary"
-                    @click="expenseForm.amount = amount"
-                  >
-                    ¥{{ amount.toLocaleString() }}
-                  </v-btn>
-                </div>
-              </div>
             </v-col>
 
             <!-- 日付入力 -->
