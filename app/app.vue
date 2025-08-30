@@ -4,7 +4,7 @@ import NavigationBar from './components/NavigationBar.vue'
 
 <template>
   <NuxtLayout>
-    <v-app class="bg-background">
+    <v-app>
       <v-main>
         <NavigationBar />
         <NuxtPage />
