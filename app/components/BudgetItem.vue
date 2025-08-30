@@ -12,7 +12,7 @@ const props = defineProps<Props>()
 const router = useRouter()
 
 const navigateToDetail = () => {
-  router.push(`/category/${props.id}`)
+  router.push(`/budget/${props.id}`)
 }
 </script>
 
