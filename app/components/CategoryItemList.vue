@@ -8,12 +8,16 @@ const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
 </script>
 
 <template>
-  <v-container>
+  <div class="category-list-container">
     <v-row>
       <v-col
         v-for="budgetWithCategory in budgetsWithCategories"
         :key="budgetWithCategory.budget_id"
-        cols="4"
+        cols="6"
+        sm="4"
+        md="4"
+        lg="3"
+        xl="3"
       >
         <CategoryItem
           :id="budgetWithCategory.category.category_id"
@@ -25,5 +29,33 @@ const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
         />
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
+
+<style scoped>
+.category-list-container {
+  width: 100%;
+  padding: 0;
+}
+
+/* モバイル表示の最適化 */
+@media (max-width: 599px) {
+  .category-list-container :deep(.v-col) {
+    padding: 6px;
+  }
+}
+
+/* タブレット表示の最適化 */
+@media (min-width: 600px) and (max-width: 959px) {
+  .category-list-container :deep(.v-col) {
+    padding: 8px;
+  }
+}
+
+/* デスクトップ表示の最適化 */
+@media (min-width: 960px) {
+  .category-list-container :deep(.v-col) {
+    padding: 12px;
+  }
+}
+</style>
