@@ -1,35 +1,37 @@
-<script setup lang="ts">
-import { useTheme } from 'vuetify'
-import { computed } from 'vue'
-
-const theme = useTheme()
-
-const isDarkMode = computed({
-  get: () => theme.global.name.value === 'dark',
-  set: (value: boolean) => {
-    theme.global.name.value = value ? 'dark' : 'light'
-  },
-})
-</script>
-
 <template>
   <v-container>
     <v-app-bar :elevation="1">
-      <v-app-bar-title>
+      <!-- スマホ表示時は中央、PC表示時は左端 -->
+      <div class="logo-wrapper">
         <NuxtLink to="/" style="text-decoration: none; color: inherit;">
-          家計簿
+          <img src="~/assets/logo.png" alt="Logo" class="logo-image">
         </NuxtLink>
-      </v-app-bar-title>
+      </div>
       <v-spacer />
-
-      <v-switch
-        v-model="isDarkMode"
-        :prepend-icon="'mdi-white-balance-sunny'"
-        :append-icon="'mdi-weather-night'"
-        color="primary"
-        hide-details
-        inset
-      />
     </v-app-bar>
   </v-container>
 </template>
+
+<style scoped>
+.logo-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-image {
+  height: 50px;
+  display: block;
+}
+
+/* PC表示時（768px以上）は左端に */
+@media (min-width: 768px) {
+  .logo-wrapper {
+    width: auto;
+    justify-content: flex-start;
+    margin-left: 16px;
+  }
+}
+</style>
