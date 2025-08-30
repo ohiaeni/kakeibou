@@ -15,7 +15,11 @@ const isDarkMode = computed({
 <template>
   <v-container>
     <v-app-bar :elevation="1">
-      <v-app-bar-title>家計簿</v-app-bar-title>
+      <v-app-bar-title>
+        <NuxtLink to="/" style="text-decoration: none; color: inherit;">
+          家計簿
+        </NuxtLink>
+      </v-app-bar-title>
       <v-spacer />
 
       <v-switch
