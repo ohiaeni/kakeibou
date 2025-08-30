@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { useBudgets } from '~/composables/useBudgets'
-import BudgetDetailHeader from '~/components/BudgetDetailHeader.vue'
-import CategoryDetailCard from '~/components/CategoryDetailCard.vue'
-import BudgetStatisticsCard from '~/components/BudgetStatisticsCard.vue'
-import BudgetEditDialog from '~/components/BudgetEditDialog.vue'
-import CategoryEditDialog from '~/components/CategoryEditDialog.vue'
-
 const route = useRoute()
 const router = useRouter()
 const { getBudgetByCategoryId, getCategoryById, updateBudget, updateCategory } = useBudgets()
 
 // URLパラメータからIDを取得
-const categoryId = computed(() => parseInt(route.params.id as string))
+const budgetId = computed(() => parseInt(route.params.id as string))
 
 // 指定されたIDに対応するカテゴリを取得
-const category = computed(() => getCategoryById(categoryId.value))
+const category = computed(() => getCategoryById(budgetId.value))
 
 // 指定されたIDに対応する予算を取得
-const budgetWithCategory = computed(() => getBudgetByCategoryId(categoryId.value))
+const budgetWithCategory = computed(() => getBudgetByCategoryId(budgetId.value))
 
 // 予算編集関連のリアクティブ変数
 const budgetDialog = ref(false)
@@ -70,17 +63,17 @@ onMounted(() => {
 
 // 予算を保存する関数
 const saveBudget = () => {
-  if (categoryId.value && budgetForm.value > 0) {
-    updateBudget(categoryId.value, budgetForm.value)
+  if (budgetId.value && budgetForm.value > 0) {
+    updateBudget(budgetId.value, budgetForm.value)
     budgetDialog.value = false
   }
 }
 
 // カテゴリを保存する関数
 const saveCategory = () => {
-  if (categoryId.value && categoryForm.value.name.trim()) {
+  if (budgetId.value && categoryForm.value.name.trim()) {
     updateCategory(
-      categoryId.value,
+      budgetId.value,
       categoryForm.value.name.trim(),
       categoryForm.value.description.trim() || undefined,
       categoryForm.value.icon,
@@ -116,7 +109,7 @@ const openCategoryEdit = () => {
 
 // カテゴリが見つからない場合は一覧ページにリダイレクト
 watchEffect(() => {
-  if (categoryId.value && !category.value) {
+  if (budgetId.value && !category.value) {
     router.push('/')
   }
 })
