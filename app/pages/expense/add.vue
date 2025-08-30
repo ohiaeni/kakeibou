@@ -52,7 +52,7 @@ const isFormValid = ref(false)
 // 成功メッセージ表示用
 const showSuccess = ref(false)
 
-// 出費を保存する関数
+// 支出を保存する関数
 const saveExpense = () => {
   if (expenseForm.value.category_id && expenseForm.value.amount && expenseForm.value.spent_at) {
     addExpense(
@@ -94,17 +94,17 @@ const resetForm = () => {
         @click="router.push('/')"
       />
       <h1 class="text-h4 font-weight-bold">
-        出費を追加
+        支出を追加
       </h1>
     </div>
 
-    <!-- 出費追加フォーム -->
+    <!-- 支出追加フォーム -->
     <v-card elevation="2" rounded="lg">
       <v-card-title class="d-flex align-center">
         <v-icon class="mr-2" color="primary">
           mdi-plus
         </v-icon>
-        新しい出費
+        新しい支出
       </v-card-title>
 
       <v-card-text class="pt-4">
@@ -322,7 +322,7 @@ const resetForm = () => {
       timeout="3000"
       location="top"
     >
-      出費を追加しました
+      支出を追加しました
       <template #actions>
         <v-btn
           color="white"

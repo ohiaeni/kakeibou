@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useBudgets } from '~/composables/useBudgets'
 
-const { getBudgetsWithCategories, getTotalBudget, getTotalExpense, getBudgetProgress } = useBudgets()
+const { getBudgetsWithCategories, getTotalBudget, getTotalExpense, getBudgetProgress, getExpensesWithCategories } = useBudgets()
 
 // 現在の年月
 const currentYear = new Date().getFullYear()
@@ -15,6 +15,9 @@ const totalBudget = computed(() => getTotalBudget(currentYear, currentMonth))
 const totalExpense = computed(() => getTotalExpense(currentYear, currentMonth))
 const totalRemaining = computed(() => totalBudget.value - totalExpense.value)
 const totalProgress = computed(() => getBudgetProgress(currentYear, currentMonth))
+
+// 最近の支出リスト（最新5件）
+const recentExpenses = computed(() => getExpensesWithCategories(currentYear, currentMonth, 5))
 
 // 最も支出の多いカテゴリ
 const topExpenseCategory = computed(() => {
@@ -31,8 +34,8 @@ const overBudgetCategories = computed(() => {
   )
 })
 
-// 月の進捗率（日付ベース）
-const monthProgress = computed(() => {
+// 月の経過率（日付ベース）
+const monthElapsed = computed(() => {
   const today = new Date()
   const daysInMonth = new Date(currentYear, currentMonth, 0).getDate()
   const currentDay = today.getDate()
@@ -153,25 +156,25 @@ const _chartData = computed(() => {
         />
 
         <div class="d-flex align-center justify-space-between mb-2">
-          <span class="text-caption">月の進捗</span>
-          <span class="text-caption">{{ monthProgress }}%</span>
+          <span class="text-caption">月の経過日数</span>
+          <span class="text-caption">{{ monthElapsed }}%</span>
         </div>
         <v-progress-linear
-          :model-value="monthProgress"
+          :model-value="monthElapsed"
           color="primary"
           height="4"
           rounded
         />
 
         <div class="text-caption text-medium-emphasis mt-2">
-          <template v-if="totalProgress > monthProgress + 10">
+          <template v-if="totalProgress > monthElapsed + 10">
             ⚠️ 予算の使用ペースが早めです
           </template>
-          <template v-else-if="totalProgress < monthProgress - 10">
+          <template v-else-if="totalProgress < monthElapsed - 10">
             ✅ 良いペースで予算を管理できています
           </template>
           <template v-else>
-            📊 予算使用率は月の進捗とほぼ同じペースです
+            📊 予算使用率は月の経過とほぼ同じペースです
           </template>
         </div>
       </v-card-text>
@@ -281,7 +284,7 @@ const _chartData = computed(() => {
             </div>
 
             <!-- 支出ペースの警告 -->
-            <div v-if="totalProgress > monthProgress + 20" class="mb-4">
+            <div v-if="totalProgress > monthElapsed + 20" class="mb-4">
               <v-alert
                 type="warning"
                 variant="tonal"
@@ -321,7 +324,7 @@ const _chartData = computed(() => {
             </div>
 
             <!-- ポジティブメッセージ -->
-            <div v-if="overBudgetCategories.length === 0 && totalProgress <= monthProgress + 10">
+            <div v-if="overBudgetCategories.length === 0 && totalProgress <= monthElapsed + 10">
               <v-alert
                 type="success"
                 variant="tonal"
@@ -352,37 +355,74 @@ const _chartData = computed(() => {
       </v-col>
     </v-row>
 
-    <!-- クイックアクション -->
+    <!-- 最近の支出リスト -->
     <v-card class="mt-6">
       <v-card-title>
-        <v-icon icon="mdi-lightning-bolt" class="me-2" />
-        クイックアクション
+        <v-icon icon="mdi-history" class="me-2" />
+        最近の支出
       </v-card-title>
       <v-card-text>
-        <div class="d-flex flex-wrap gap-3">
+        <div v-if="recentExpenses.length === 0" class="text-center py-8">
+          <v-icon icon="mdi-receipt" size="64" class="text-medium-emphasis mb-4" />
+          <p class="text-medium-emphasis">
+            今月の支出データがありません
+          </p>
           <v-btn
             color="primary"
             variant="elevated"
             prepend-icon="mdi-plus"
             to="/expense/add"
+            class="mt-4"
           >
             支出を記録
           </v-btn>
-          <v-btn
-            color="secondary"
-            variant="outlined"
-            prepend-icon="mdi-view-list"
-            to="/"
-          >
-            カテゴリ一覧
-          </v-btn>
-          <v-btn
-            color="info"
-            variant="outlined"
-            prepend-icon="mdi-cog"
-          >
-            予算設定
-          </v-btn>
+        </div>
+        <div v-else>
+          <v-list lines="two">
+            <template
+              v-for="(expense, index) in recentExpenses"
+              :key="expense.expense_id"
+            >
+              <v-list-item>
+                <template #prepend>
+                  <v-avatar :color="expense.category?.color || 'primary'" size="40">
+                    <v-icon
+                      :icon="expense.category?.icon || 'mdi-cash'"
+                      color="white"
+                    />
+                  </v-avatar>
+                </template>
+
+                <v-list-item-title class="font-weight-medium">
+                  {{ expense.category?.name || '不明' }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  <div class="d-flex align-center justify-space-between">
+                    <span>{{ expense.spent_at }}</span>
+                    <span class="font-weight-bold text-error">
+                      -¥{{ expense.amount.toLocaleString() }}
+                    </span>
+                  </div>
+                  <div v-if="expense.note" class="text-caption mt-1">
+                    {{ expense.note }}
+                  </div>
+                </v-list-item-subtitle>
+              </v-list-item>
+
+              <v-divider v-if="index < recentExpenses.length - 1" />
+            </template>
+          </v-list>
+
+          <div class="d-flex justify-center mt-4">
+            <v-btn
+              color="primary"
+              variant="outlined"
+              prepend-icon="mdi-plus"
+              to="/expense/add"
+            >
+              支出を追加
+            </v-btn>
+          </div>
         </div>
       </v-card-text>
     </v-card>

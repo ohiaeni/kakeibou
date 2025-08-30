@@ -5,7 +5,7 @@ const { clearStorage } = useBudgets()
 // 開発環境かどうかを判定
 const isDevelopment = process.env.NODE_ENV === 'development'
 
-// 出費追加ページに遷移
+// 支出追加ページに遷移
 const navigateToAddExpense = () => {
   router.push('/expense/add')
 }
@@ -26,7 +26,7 @@ const handleClearLocalData = () => {
   <v-container>
     <!-- メインアクションエリア -->
     <div class="d-flex flex-wrap gap-4 justify-center mb-6">
-      <!-- 主要アクション: 出費を追加 -->
+      <!-- 主要アクション: 支出を追加 -->
       <div class="d-flex flex-column align-center" style="min-width: 100px;">
         <v-btn
           color="primary"
@@ -39,7 +39,7 @@ const handleClearLocalData = () => {
           @click="navigateToAddExpense"
         />
         <div class="text-caption text-medium-emphasis text-center">
-          出費を追加
+          支出を追加
         </div>
       </div>
 

@@ -570,6 +570,27 @@ export const useBudgets = () => {
     return totalBudget === 0 ? 0 : Math.round((totalExpense / totalBudget) * 100)
   }
 
+  // 支出データを取得（カテゴリ情報付き）
+  const getExpensesWithCategories = (year: number = currentYear.value, month: number = currentMonth.value, limit?: number) => {
+    const filteredExpenses = expenses.value
+      .filter(expense =>
+        expense.user_id === currentUserId.value
+        && new Date(expense.spent_at).getFullYear() === year
+        && new Date(expense.spent_at).getMonth() + 1 === month,
+      )
+      .map((expense) => {
+        const category = categories.value.find(c => c.category_id === expense.category_id)
+        return {
+          ...expense,
+          category,
+        }
+      })
+      .filter(expense => expense.category) // カテゴリが見つからない支出は除外
+      .sort((a, b) => new Date(b.spent_at).getTime() - new Date(a.spent_at).getTime()) // 新しい順にソート
+
+    return limit ? filteredExpenses.slice(0, limit) : filteredExpenses
+  }
+
   return {
     currentUserId,
     currentYear,
@@ -588,5 +609,6 @@ export const useBudgets = () => {
     getTotalBudget,
     getTotalExpense,
     getBudgetProgress,
+    getExpensesWithCategories,
   }
 }
