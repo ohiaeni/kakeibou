@@ -501,7 +501,7 @@ const _chartData = computed(() => {
 
 .dashboard-subtitle {
   font-size: 1rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
   margin-top: 4px;
 }
 
@@ -575,7 +575,7 @@ const _chartData = computed(() => {
 
 .progress-text {
   font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
   flex-shrink: 0;
   min-width: 40px;
   text-align: right;
@@ -596,7 +596,7 @@ const _chartData = computed(() => {
 
 .expense-date {
   font-size: 0.875rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .expense-amount {
@@ -608,7 +608,7 @@ const _chartData = computed(() => {
 
 .expense-note {
   font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
   margin-top: 4px;
   line-height: 1.3;
 }

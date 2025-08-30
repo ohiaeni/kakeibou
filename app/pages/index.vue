@@ -159,7 +159,7 @@ const handleClearLocalData = () => {
 .action-label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
   text-align: center;
   line-height: 1.2;
 }
@@ -271,17 +271,6 @@ const handleClearLocalData = () => {
   .debug-section {
     margin-top: 64px;
     padding-top: 32px;
-  }
-}
-
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-  .action-btn {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-
-  .action-btn:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   }
 }
 </style>

@@ -42,13 +42,13 @@ const navigateToDetail = () => {
         <v-icon
           class="category-icon"
           size="small"
-          :color="amount === 0 ? 'grey-lighten-1' : 'on-surface-variant'"
+          :color="amount === 0 ? 'grey-darken-1' : 'primary'"
         >
           {{ icon }}
         </v-icon>
         <div
           class="category-name"
-          :class="amount === 0 ? 'text-grey-lighten-1' : 'text-on-surface'"
+          :class="amount === 0 ? 'text-grey-darken-1' : 'text-on-surface'"
         >
           {{ name }}
         </div>
@@ -177,17 +177,6 @@ const navigateToDetail = () => {
 
   .category-name {
     font-size: 0.8rem;
-  }
-}
-
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-  .category-card {
-    border-color: rgb(var(--v-theme-outline));
-  }
-
-  .category-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   }
 }
 </style>

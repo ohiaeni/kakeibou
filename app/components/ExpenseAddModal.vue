@@ -302,46 +302,6 @@ const handleClose = () => {
               class="form-field"
             />
           </div>
-
-          <!-- プレビュー -->
-          <div class="section">
-            <div class="preview-title">
-              プレビュー
-            </div>
-            <v-card
-              color="surface-variant"
-              rounded="lg"
-              class="preview-card"
-            >
-              <v-card-text class="preview-content">
-                <div class="preview-main">
-                  <div class="preview-left">
-                    <v-icon
-                      class="preview-icon"
-                      size="large"
-                      :color="expenseForm.category_id ? categories.find(c => c.category_id === expenseForm.category_id)?.color : 'grey'"
-                    >
-                      {{ expenseForm.category_id ? categories.find(c => c.category_id === expenseForm.category_id)?.icon : 'mdi-help' }}
-                    </v-icon>
-                    <div class="preview-details">
-                      <div class="preview-category">
-                        {{ expenseForm.category_id ? categories.find(c => c.category_id === expenseForm.category_id)?.name : 'カテゴリを選択' }}
-                      </div>
-                      <div class="preview-date">
-                        {{ expenseForm.spent_at || '日付を選択' }}
-                      </div>
-                      <div v-if="expenseForm.note" class="preview-note">
-                        {{ expenseForm.note }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="preview-amount" :class="expenseForm.amount ? 'text-error' : 'text-grey'">
-                    ¥{{ expenseForm.amount ? expenseForm.amount.toLocaleString() : '0' }}
-                  </div>
-                </div>
-              </v-card-text>
-            </v-card>
-          </div>
         </v-form>
       </v-card-text>
 
@@ -446,7 +406,7 @@ const handleClose = () => {
 
 .helper-text {
   font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
   margin-top: 4px;
   margin-bottom: 8px;
 }
@@ -468,8 +428,9 @@ const handleClose = () => {
 }
 
 .quick-amounts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   margin-bottom: 8px;
 }
@@ -489,80 +450,8 @@ const handleClose = () => {
 
 .quick-amounts-help {
   font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(var(--v-theme-on-surface));
   text-align: center;
-}
-
-/* プレビューセクション */
-.preview-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 8px;
-}
-
-.preview-card {
-  padding: 16px;
-}
-
-.preview-content {
-  padding: 0;
-}
-
-.preview-main {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.preview-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  min-width: 0;
-}
-
-.preview-icon {
-  flex-shrink: 0;
-}
-
-.preview-details {
-  flex: 1;
-  min-width: 0;
-}
-
-.preview-category {
-  font-size: 1rem;
-  font-weight: 500;
-  color: rgb(var(--v-theme-on-surface));
-  line-height: 1.3;
-}
-
-.preview-date {
-  font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin-top: 2px;
-}
-
-.preview-note {
-  font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin-top: 4px;
-  line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.preview-amount {
-  font-size: 1.25rem;
-  font-weight: bold;
-  flex-shrink: 0;
 }
 
 /* フッター */
@@ -612,10 +501,6 @@ const handleClose = () => {
     margin-left: 8px;
   }
 
-  .quick-amounts-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .preview-main {
     flex-direction: column;
     align-items: flex-start;
@@ -629,13 +514,6 @@ const handleClose = () => {
   .preview-amount {
     align-self: flex-end;
     font-size: 1.1rem;
-  }
-}
-
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-  .preview-card {
-    border: 1px solid rgb(var(--v-theme-outline-variant));
   }
 }
 </style>

@@ -408,40 +408,6 @@ watch(category, (newCategory) => {
                   required
                 />
               </v-col>
-
-              <v-col cols="12">
-                <div class="text-subtitle-2 mb-2">
-                  プレビュー
-                </div>
-                <v-card
-                  class="d-flex flex-column align-center justify-center pa-4"
-                  color="surface-variant"
-                  height="120"
-                  width="120"
-                  rounded="lg"
-                >
-                  <v-progress-circular
-                    :model-value="75"
-                    :size="60"
-                    :width="6"
-                    :color="categoryForm.color"
-                    bg-color="white"
-                    class="mb-2"
-                  >
-                    <span class="text-body-2 font-weight-medium">
-                      75%
-                    </span>
-                  </v-progress-circular>
-                  <div class="d-flex align-center">
-                    <v-icon class="mr-1" size="small" :color="categoryForm.color">
-                      {{ categoryForm.icon }}
-                    </v-icon>
-                    <span class="text-caption font-weight-medium">
-                      {{ categoryForm.name || 'カテゴリ名' }}
-                    </span>
-                  </div>
-                </v-card>
-              </v-col>
             </v-row>
           </v-card-text>
 
