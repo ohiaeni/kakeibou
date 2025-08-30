@@ -46,53 +46,6 @@ const categories = computed(() => {
 // 予算情報付きカテゴリを取得
 const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
 
-// よく使うカテゴリ（予算設定済みのカテゴリを優先表示）
-const frequentCategories = computed(() => {
-  return budgetsWithCategories.value
-    .filter(budget => budget.amount > 0)
-    .slice(0, 6)
-})
-
-// 予算未設定のカテゴリがあるかチェック
-const hasUnbudgetedCategories = computed(() => {
-  const totalCategories = budgetsWithCategories.value.length
-  const budgetedCategories = categories.value.length
-  return totalCategories > budgetedCategories
-})
-
-// 金額のクイック選択（加算・減算対応）
-const handleAmountSelect = (amount: number, event: PointerEvent) => {
-  const target = event.target as HTMLElement
-  let pressTimer: NodeJS.Timeout | undefined = undefined
-
-  // 長押し検出用の変数
-  let isLongPress = false
-
-  const handlePointerUp = () => {
-    clearTimeout(pressTimer)
-    target.removeEventListener('pointerup', handlePointerUp)
-    target.removeEventListener('pointerleave', handlePointerUp)
-
-    if (!isLongPress) {
-      // 短押し：加算
-      expenseForm.value.amount = (expenseForm.value.amount || 0) + amount
-    }
-  }
-
-  const handleLongPress = () => {
-    isLongPress = true
-    // 長押し：減算（0未満にはしない）
-    const newAmount = (expenseForm.value.amount || 0) - amount
-    expenseForm.value.amount = Math.max(0, newAmount)
-  }
-
-  // 長押し検出（500ms）
-  pressTimer = setTimeout(handleLongPress, 500)
-
-  target.addEventListener('pointerup', handlePointerUp)
-  target.addEventListener('pointerleave', handlePointerUp)
-}
-
 // フォームの有効性
 const isFormValid = ref(false)
 
@@ -142,7 +95,7 @@ const handleClose = () => {
     :fullscreen="$vuetify.display.xs"
     persistent
   >
-    <v-card class="h-100" style="max-height: 90vh;">
+    <v-card>
       <!-- ヘッダー -->
       <v-card-title class="d-flex align-center ga-2 pa-5 pa-sm-6 text-h6 font-weight-bold">
         <v-icon color="primary" class="mr-1">
@@ -158,40 +111,17 @@ const handleClose = () => {
         />
       </v-card-title>
 
-      <v-divider />
-
       <!-- フォーム内容 -->
-      <v-card-text class="pa-5 pa-sm-6" style="max-height: 60vh; overflow-y: auto;">
-        <v-form v-model="isFormValid">
-          <!-- よく使うカテゴリ -->
-          <div v-if="frequentCategories.length > 0" class="mb-6">
-            <div class="text-body-1 font-weight-bold text-on-surface mb-3">
-              よく使うカテゴリ
-            </div>
-            <div class="d-flex flex-wrap ga-2 mb-4">
-              <v-chip
-                v-for="budget in frequentCategories"
-                :key="budget.category.category_id"
-                :color="budget.category.color"
-                variant="outlined"
-                size="small"
-                clickable
-                style="transition: transform 0.2s ease;"
-                @click="expenseForm.category_id = budget.category.category_id"
-                @mouseenter="($event.target as HTMLElement).style.transform = 'scale(1.05)'"
-                @mouseleave="($event.target as HTMLElement).style.transform = 'scale(1)'"
-              >
-                <v-icon start :icon="budget.category.icon" />
-                {{ budget.category.name }}
-              </v-chip>
-            </div>
-          </div>
-
-          <!-- カテゴリ選択 -->
+      <v-card-text class="pa-0">
+        <v-form v-model="isFormValid" class="pa-6">
+          <!-- カテゴリ選択セクション -->
           <div class="mb-6">
+            <v-label class="text-subtitle-2 font-weight-medium mb-2">
+              カテゴリ
+            </v-label>
             <v-select
               v-model="expenseForm.category_id"
-              label="カテゴリ"
+              label="カテゴリを選択"
               variant="outlined"
               :items="categories"
               item-title="name"
@@ -221,126 +151,101 @@ const handleClose = () => {
                 </v-list-item>
               </template>
             </v-select>
-
-            <div class="text-caption text-on-surface mt-1 mb-2">
+            <div class="text-caption text-medium-emphasis">
               ※ 予算が設定されているカテゴリのみ表示されます
             </div>
-
-            <!-- 予算未設定のカテゴリがある場合の案内 -->
-            <v-alert
-              v-if="hasUnbudgetedCategories"
-              type="info"
-              variant="tonal"
-              density="compact"
-              class="mt-3"
-            >
-              <div class="text-body-2">
-                他のカテゴリを使用したい場合は、先に予算を設定してください
-              </div>
-            </v-alert>
           </div>
 
-          <!-- 金額と日付 -->
-          <v-row class="mb-6">
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model.number="expenseForm.amount"
-                label="金額"
-                type="number"
-                prefix="¥"
-                variant="outlined"
-                min="1"
-                step="1"
-                required
-                :rules="[rules.required, rules.amount]"
-                class="mb-2"
-              />
-
-              <!-- クイック金額選択 -->
-              <div class="mt-4">
-                <div class="text-body-2 font-weight-medium text-on-surface mb-2">
-                  クイック選択
-                </div>
-                <div class="d-flex flex-wrap justify-center ga-2 mb-2">
-                  <v-chip
-                    v-for="amount in [500, 1000, 2000, 3000, 5000, 10000]"
-                    :key="amount"
-                    variant="outlined"
-                    size="small"
-                    clickable
-                    style="transition: all 0.2s ease; user-select: none;"
-                    @pointerdown="handleAmountSelect(amount, $event)"
-                    @mouseenter="($event.target as HTMLElement).style.transform = 'scale(1.05)'"
-                    @mouseleave="($event.target as HTMLElement).style.transform = 'scale(1)'"
-                  >
-                    ¥{{ amount.toLocaleString() }}
-                  </v-chip>
-                </div>
-                <div class="text-caption text-on-surface text-center">
-                  タップで加算、長押しで減算
-                </div>
-              </div>
-            </v-col>
-
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="expenseForm.spent_at"
-                label="支出日"
-                type="date"
-                variant="outlined"
-                required
-                :rules="[rules.required]"
-                class="mb-2"
-              />
-            </v-col>
-          </v-row>
-
-          <!-- メモ入力 -->
+          <!-- 金額セクション -->
           <div class="mb-6">
+            <v-label class="text-subtitle-2 font-weight-medium mb-2">
+              金額
+            </v-label>
+            <v-text-field
+              v-model.number="expenseForm.amount"
+              label="金額を入力"
+              type="number"
+              prefix="¥"
+              variant="outlined"
+              min="1"
+              step="1"
+              required
+              :rules="[rules.required, rules.amount]"
+            />
+          </div>
+
+          <!-- 支出日セクション -->
+          <div class="mb-6">
+            <v-label class="text-subtitle-2 font-weight-medium mb-2">
+              支出日
+            </v-label>
+            <v-text-field
+              v-model="expenseForm.spent_at"
+              label="支出日を選択"
+              type="date"
+              variant="outlined"
+              required
+              :rules="[rules.required]"
+            />
+          </div>
+
+          <!-- メモセクション -->
+          <div class="mb-4">
+            <v-label class="text-subtitle-2 font-weight-medium mb-2">
+              メモ（任意）
+            </v-label>
             <v-textarea
               v-model="expenseForm.note"
-              label="メモ（任意）"
+              label="メモを入力"
               variant="outlined"
               rows="3"
               placeholder="例：スーパーで食材購入、電車代など"
-              class="mb-2"
             />
           </div>
         </v-form>
       </v-card-text>
 
-      <v-divider />
-
       <!-- フッター（アクションボタン） -->
-      <v-card-actions class="d-flex ga-2 pa-4 pa-sm-6 flex-column flex-sm-row">
-        <!-- モバイル表示でリセットボタンを下に配置 -->
-        <v-btn
-          color="grey"
-          variant="outlined"
-          class="order-2 order-sm-0 w-100 w-sm-auto mt-2 mt-sm-0"
-          @click="resetForm"
-        >
-          リセット
-        </v-btn>
-        <v-spacer class="d-none d-sm-flex" />
-        <div class="d-flex ga-2 order-1 order-sm-0 w-100 w-sm-auto">
+      <v-card-actions class="pa-6 pt-0">
+        <div class="d-flex flex-column flex-sm-row justify-sm-space-between align-sm-center ga-3 w-100">
+          <!-- リセットボタン -->
           <v-btn
-            color="grey"
-            variant="text"
-            class="flex-fill flex-sm-grow-0"
-            @click="handleClose"
+            color="grey-darken-1"
+            size="large"
+            class="w-100 w-sm-auto order-2 order-sm-1"
+            @click="resetForm"
           >
-            キャンセル
+            <v-icon start>
+              mdi-refresh
+            </v-icon>
+            リセット
           </v-btn>
-          <v-btn
-            color="primary"
-            variant="elevated"
-            class="flex-fill flex-sm-grow-0 ml-2"
-            :disabled="!isFormValid || !expenseForm.category_id || !expenseForm.amount || !expenseForm.spent_at"
-            @click="saveExpense"
-          >
-            保存
-          </v-btn>
+
+          <!-- 主要アクションボタン -->
+          <div class="d-flex ga-3 order-1 order-sm-2">
+            <v-btn
+              color="grey-darken-1"
+              variant="text"
+              size="large"
+              class="flex-fill flex-sm-grow-0"
+              @click="handleClose"
+            >
+              キャンセル
+            </v-btn>
+            <v-btn
+              color="primary"
+              variant="elevated"
+              size="large"
+              class="flex-fill flex-sm-grow-0"
+              :disabled="!isFormValid || !expenseForm.category_id || !expenseForm.amount || !expenseForm.spent_at"
+              @click="saveExpense"
+            >
+              <v-icon start>
+                mdi-content-save
+              </v-icon>
+              保存
+            </v-btn>
+          </div>
         </div>
       </v-card-actions>
     </v-card>
