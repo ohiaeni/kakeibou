@@ -4,7 +4,6 @@ import { computed } from 'vue'
 
 const theme = useTheme()
 
-// ダークモードの状態を管理
 const isDarkMode = computed({
   get: () => theme.global.name.value === 'dark',
   set: (value: boolean) => {
@@ -22,7 +21,7 @@ const isDarkMode = computed({
             <template #prepend>
               <v-app-bar-nav-icon />
             </template>
-            <v-app-bar-title>Application Bar</v-app-bar-title>
+            <v-app-bar-title>kakeibou</v-app-bar-title>
 
             <v-spacer />
 
