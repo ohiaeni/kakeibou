@@ -20,6 +20,7 @@ const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
           :name="budgetWithCategory.category.name"
           :icon="budgetWithCategory.category.icon"
           :percentage="budgetWithCategory.usage_percentage"
+          :amount="budgetWithCategory.amount"
           :color="budgetWithCategory.category.color"
         />
       </v-col>

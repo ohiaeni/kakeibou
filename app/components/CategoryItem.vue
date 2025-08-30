@@ -4,6 +4,7 @@ interface Props {
   name: string
   icon: string
   percentage: number
+  amount: number
   color?: string
 }
 
@@ -29,25 +30,25 @@ const navigateToDetail = () => {
       :model-value="percentage"
       :size="60"
       :width="6"
-      :color="percentage === 0 ? 'grey-lighten-2' : 'primary'"
+      :color="amount === 0 ? 'grey-lighten-2' : 'primary'"
       bg-color="white"
       class="mb-2"
     >
       <span class="text-body-2 font-weight-medium text-on-surface">
-        {{ percentage === 0 ? '未設定' : `${percentage}%` }}
+        {{ amount === 0 ? '未設定' : `${percentage}%` }}
       </span>
     </v-progress-circular>
     <div class="d-flex align-center">
       <v-icon
         class="mr-1"
         size="small"
-        :color="percentage === 0 ? 'grey-lighten-1' : 'on-surface-variant'"
+        :color="amount === 0 ? 'grey-lighten-1' : 'on-surface-variant'"
       >
         {{ icon }}
       </v-icon>
       <v-card-title
         class="text-caption text-center pa-0 font-weight-medium"
-        :class="percentage === 0 ? 'text-grey-lighten-1' : 'text-on-surface'"
+        :class="amount === 0 ? 'text-grey-lighten-1' : 'text-on-surface'"
       >
         {{ name }}
       </v-card-title>

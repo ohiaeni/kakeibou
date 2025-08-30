@@ -209,6 +209,27 @@ export const useBudgets = () => {
       created_at: '2025-08-01T00:00:00Z',
       updated_at: '2025-08-01T00:00:00Z',
     },
+    // 予算0円のカテゴリを追加（テスト用）
+    {
+      budget_id: 6,
+      user_id: 1,
+      category_id: 6,
+      amount: 0,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
+    {
+      budget_id: 7,
+      user_id: 1,
+      category_id: 7,
+      amount: 0,
+      year: 2025,
+      month: 8,
+      created_at: '2025-08-01T00:00:00Z',
+      updated_at: '2025-08-01T00:00:00Z',
+    },
   ])
 
   // サンプル支出データ
@@ -263,7 +284,8 @@ export const useBudgets = () => {
           )
           .reduce((sum, expense) => sum + expense.amount, 0)
 
-        const usagePercentage = Math.round((currentExpense / budget.amount) * 100)
+        // 予算が0の場合は使用率を0にして「未設定」として扱う
+        const usagePercentage = budget.amount === 0 ? 0 : Math.round((currentExpense / budget.amount) * 100)
         const remainingAmount = budget.amount - currentExpense
 
         return {
@@ -288,14 +310,17 @@ export const useBudgets = () => {
     const userCategories = categories.value.filter(category => category.user_id === currentUserId.value)
     const existingBudgets = getBudgetsWithCategories(year, month)
 
-    // 予算が設定されているカテゴリのIDリスト
-    const budgetCategoryIds = existingBudgets.map(budget => budget.category.category_id)
+    // 全カテゴリに対して予算情報を作成
+    const allCategoriesWithBudgets = userCategories.map((category) => {
+      // 既存の予算があるかチェック
+      const existingBudget = existingBudgets.find(budget => budget.category.category_id === category.category_id)
 
-    // 予算未設定のカテゴリを取得
-    const unbadgetedCategories = userCategories
-      .filter(category => !budgetCategoryIds.includes(category.category_id))
-      .map((category) => {
-        // 該当する支出を計算
+      if (existingBudget) {
+        // 既存の予算がある場合はそれを使用
+        return existingBudget
+      }
+      else {
+        // 予算が設定されていない場合は0円として作成
         const currentExpense = expenses.value
           .filter(expense =>
             expense.category_id === category.category_id
@@ -318,11 +343,11 @@ export const useBudgets = () => {
           usage_percentage: 0, // 予算未設定の場合は0%
           remaining_amount: -currentExpense, // 予算がないので支出がマイナス表示
         }
-      })
+      }
+    })
 
-    // 予算設定済み + 未設定のカテゴリを結合して9件に制限
-    const allBudgets = [...existingBudgets, ...unbadgetedCategories]
-    return allBudgets.slice(0, 9)
+    // 9件に制限
+    return allCategoriesWithBudgets.slice(0, 9)
   }
 
   // カテゴリIDから予算を取得
@@ -449,6 +474,31 @@ export const useBudgets = () => {
     loadFromStorage()
   })
 
+  // 合計予算を取得
+  const getTotalBudget = (year: number = currentYear.value, month: number = currentMonth.value): number => {
+    return budgets.value
+      .filter(budget => budget.year === year && budget.month === month && budget.user_id === currentUserId.value)
+      .reduce((sum, budget) => sum + budget.amount, 0)
+  }
+
+  // 合計支出を取得
+  const getTotalExpense = (year: number = currentYear.value, month: number = currentMonth.value): number => {
+    return expenses.value
+      .filter(expense =>
+        expense.user_id === currentUserId.value
+        && new Date(expense.spent_at).getFullYear() === year
+        && new Date(expense.spent_at).getMonth() + 1 === month,
+      )
+      .reduce((sum, expense) => sum + expense.amount, 0)
+  }
+
+  // 予算の進捗率を取得
+  const getBudgetProgress = (year: number = currentYear.value, month: number = currentMonth.value): number => {
+    const totalBudget = getTotalBudget(year, month)
+    const totalExpense = getTotalExpense(year, month)
+    return totalBudget === 0 ? 0 : Math.round((totalExpense / totalBudget) * 100)
+  }
+
   return {
     currentUserId,
     currentYear,
@@ -462,5 +512,8 @@ export const useBudgets = () => {
     updateCategory,
     addExpense,
     loadFromStorage,
+    getTotalBudget,
+    getTotalExpense,
+    getBudgetProgress,
   }
 }

@@ -1,4 +1,10 @@
 <script setup lang="ts">
+const router = useRouter()
+
+// 出費追加ページに遷移
+const navigateToAddExpense = () => {
+  router.push('/expense/add')
+}
 </script>
 
 <template>
@@ -15,6 +21,7 @@
           icon="mdi-plus"
           class="mb-2"
           style="width: 70px; height: 70px;"
+          @click="navigateToAddExpense"
         />
         <div class="text-caption text-medium-emphasis text-center">
           出費を追加
@@ -31,6 +38,7 @@
           icon="mdi-chart-line"
           class="mb-2"
           style="width: 70px; height: 70px;"
+          to="/dashboard"
         />
         <div class="text-caption text-medium-emphasis text-center">
           ダッシュボード
