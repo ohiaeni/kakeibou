@@ -1,9 +1,24 @@
 <script setup lang="ts">
 const router = useRouter()
+const { clearStorage } = useBudgets()
+
+// 開発環境かどうかを判定
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 // 出費追加ページに遷移
 const navigateToAddExpense = () => {
   router.push('/expense/add')
+}
+
+// デバッグ用：ローカルストレージデータを削除
+const handleClearLocalData = () => {
+  if (confirm('すべてのローカルデータを削除しますか？\n\n削除されるデータ：\n- 予算データ\n- 支出データ\n- カテゴリデータ\n\nこの操作は取り消せません。')) {
+    clearStorage()
+    // 削除完了を通知
+    alert('ローカルデータを削除しました。ページをリロードします。')
+    // ページをリロードして初期状態に戻す
+    window.location.reload()
+  }
 }
 </script>
 
@@ -46,5 +61,18 @@ const navigateToAddExpense = () => {
       </div>
     </div>
     <CategoryItemList />
+
+    <!-- デバッグ用削除ボタン（開発環境のみ表示） -->
+    <div v-if="isDevelopment" class="d-flex justify-center mt-8">
+      <v-btn
+        color="error"
+        variant="outlined"
+        prepend-icon="mdi-delete-sweep"
+        size="small"
+        @click="handleClearLocalData"
+      >
+        🔧 ローカルデータを削除 (Debug)
+      </v-btn>
+    </div>
   </v-container>
 </template>

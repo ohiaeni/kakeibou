@@ -469,6 +469,77 @@ export const useBudgets = () => {
     }
   }
 
+  // ローカルストレージのデータをすべて削除
+  const clearStorage = (): void => {
+    if (import.meta.client) {
+      localStorage.removeItem('budgets')
+      localStorage.removeItem('expenses')
+      localStorage.removeItem('categories')
+
+      // データをデフォルト状態にリセット
+      budgets.value = []
+      expenses.value = []
+      // カテゴリは初期データに戻す（必要に応じて）
+      resetCategories()
+    }
+  }
+
+  // カテゴリを初期状態にリセット
+  const resetCategories = (): void => {
+    categories.value = [
+      {
+        category_id: 1,
+        user_id: 1,
+        name: '食費',
+        description: '食材費、外食費など',
+        icon: 'mdi-food',
+        color: 'primary',
+        created_at: '2025-01-01T00:00:00Z',
+        updated_at: '2025-01-01T00:00:00Z',
+      },
+      {
+        category_id: 2,
+        user_id: 1,
+        name: '交通費',
+        description: '電車賃、ガソリン代など',
+        icon: 'mdi-train',
+        color: 'primary',
+        created_at: '2025-01-01T00:00:00Z',
+        updated_at: '2025-01-01T00:00:00Z',
+      },
+      {
+        category_id: 3,
+        user_id: 1,
+        name: '娯楽',
+        description: '映画、ゲーム、レジャーなど',
+        icon: 'mdi-movie',
+        color: 'primary',
+        created_at: '2025-01-01T00:00:00Z',
+        updated_at: '2025-01-01T00:00:00Z',
+      },
+      {
+        category_id: 4,
+        user_id: 1,
+        name: '光熱費',
+        description: '電気、ガス、水道代など',
+        icon: 'mdi-lightning-bolt',
+        color: 'warning',
+        created_at: '2025-01-01T00:00:00Z',
+        updated_at: '2025-01-01T00:00:00Z',
+      },
+      {
+        category_id: 5,
+        user_id: 1,
+        name: 'その他',
+        description: 'その他の支出',
+        icon: 'mdi-dots-horizontal',
+        color: 'secondary',
+        created_at: '2025-01-01T00:00:00Z',
+        updated_at: '2025-01-01T00:00:00Z',
+      },
+    ]
+  }
+
   // 初期化
   onMounted(() => {
     loadFromStorage()
@@ -512,6 +583,8 @@ export const useBudgets = () => {
     updateCategory,
     addExpense,
     loadFromStorage,
+    clearStorage,
+    resetCategories,
     getTotalBudget,
     getTotalExpense,
     getBudgetProgress,
