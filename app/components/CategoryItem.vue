@@ -21,7 +21,7 @@ defineProps<Props>()
       :size="60"
       :width="6"
       color="primary"
-      bg-color="surface-variant"
+      bg-color="white"
       class="mb-2"
     >
       <span class="text-body-2 font-weight-medium text-on-surface">
