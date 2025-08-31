@@ -1,20 +1,39 @@
 <script setup lang="ts">
-import { useBudgetDetail, type CategoryForm } from '~/composables/useBudgetDetail'
+import type { CategoryForm } from '~/composables/useBudgetDetail'
 
-const route = useRoute()
+interface Category {
+  category_id: number
+  name: string
+  description?: string
+  icon: string
+  color?: string
+}
 
-// URLパラメータからIDを取得
-const budgetId = computed(() => parseInt(route.params.id as string))
+interface BudgetWithCategory {
+  budget_id: number
+  amount: number
+  current_expense: number
+  remaining_amount: number
+  usage_percentage: number
+  category: Category
+}
 
-// 予算詳細のロジックを取得
-const {
-  category,
-  budgetWithCategory,
-  availableIcons,
-  saveBudget,
-  saveCategory,
-  goBack,
-} = useBudgetDetail(budgetId)
+interface Props {
+  category?: Category | null
+  budgetWithCategory?: BudgetWithCategory | null
+  availableIcons: string[]
+}
+
+interface Emits {
+  (e: 'go-back'): void
+  (e: 'edit-category', category: Category): void
+  (e: 'edit-budget', budgetData: BudgetWithCategory): void
+  (e: 'save-budget', amount: number): void
+  (e: 'save-category', form: CategoryForm): void
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 // 予算編集関連のリアクティブ変数
 const budgetDialog = ref(false)
@@ -31,33 +50,33 @@ const categoryForm = ref<CategoryForm>({
 
 // 予算データを初期化
 onMounted(() => {
-  if (budgetWithCategory.value) {
-    budgetForm.value = budgetWithCategory.value.amount
+  if (props.budgetWithCategory) {
+    budgetForm.value = props.budgetWithCategory.amount
   }
 
   // カテゴリ情報をフォームに設定
-  if (category.value) {
+  if (props.category) {
     categoryForm.value = {
-      name: category.value.name,
-      description: category.value.description || '',
-      icon: category.value.icon,
-      color: category.value.color || 'primary',
+      name: props.category.name,
+      description: props.category.description || '',
+      icon: props.category.icon,
+      color: props.category.color || 'primary',
     }
   }
 })
 
 // 予算を保存する関数
-const handleSaveBudget = () => {
+const saveBudget = () => {
   if (budgetForm.value > 0) {
-    saveBudget(budgetForm.value)
+    emit('save-budget', budgetForm.value)
     budgetDialog.value = false
   }
 }
 
 // カテゴリを保存する関数
-const handleSaveCategory = () => {
+const saveCategory = () => {
   if (categoryForm.value.name.trim()) {
-    saveCategory({
+    emit('save-category', {
       name: categoryForm.value.name.trim(),
       description: categoryForm.value.description.trim() || '',
       icon: categoryForm.value.icon,
@@ -69,30 +88,32 @@ const handleSaveCategory = () => {
 
 // 予算編集を開始する関数
 const openBudgetEdit = () => {
-  if (budgetWithCategory.value && budgetWithCategory.value.amount > 0) {
-    budgetForm.value = budgetWithCategory.value.amount
+  if (props.budgetWithCategory && props.budgetWithCategory.amount > 0) {
+    budgetForm.value = props.budgetWithCategory.amount
   }
   else {
     budgetForm.value = 50000 // 予算未設定の場合のデフォルト値
   }
+  emit('edit-budget', props.budgetWithCategory!)
   budgetDialog.value = true
 }
 
 // カテゴリ編集を開始する関数
 const openCategoryEdit = () => {
-  if (category.value) {
+  if (props.category) {
     categoryForm.value = {
-      name: category.value.name,
-      description: category.value.description || '',
-      icon: category.value.icon,
-      color: category.value.color || 'primary',
+      name: props.category.name,
+      description: props.category.description || '',
+      icon: props.category.icon,
+      color: props.category.color || 'primary',
     }
+    emit('edit-category', props.category)
   }
   categoryDialog.value = true
 }
 
 // カテゴリが変更された時にフォームデータを更新
-watch(category, (newCategory) => {
+watch(() => props.category, (newCategory) => {
   if (newCategory) {
     categoryForm.value = {
       name: newCategory.name,
@@ -117,7 +138,7 @@ watch(category, (newCategory) => {
       <v-btn
         color="primary"
         class="mt-4"
-        @click="goBack"
+        @click="emit('go-back')"
       >
         ホームに戻る
       </v-btn>
@@ -128,7 +149,7 @@ watch(category, (newCategory) => {
       <!-- ヘッダー -->
       <OrganismsBudgetDetailHeader
         :category-name="category.name"
-        @go-back="goBack"
+        @go-back="emit('go-back')"
         @edit-category="openCategoryEdit"
       />
 
@@ -150,7 +171,7 @@ watch(category, (newCategory) => {
         v-model:budget-form="budgetForm"
         :category-name="category.name"
         :budget-data="budgetWithCategory"
-        @save="handleSaveBudget"
+        @save="saveBudget"
       />
 
       <!-- カテゴリ編集ダイアログ -->
@@ -158,7 +179,7 @@ watch(category, (newCategory) => {
         v-model:is-open="categoryDialog"
         v-model:category-form="categoryForm"
         :available-icons="availableIcons"
-        @save="handleSaveCategory"
+        @save="saveCategory"
       />
     </div>
   </v-container>
