@@ -15,7 +15,7 @@ const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
         cols="4"
         class="pa-1 pa-sm-2 pa-md-3"
       >
-        <BudgetItem
+        <AtomsBudgetItem
           :id="budgetWithCategory.category.category_id"
           :name="budgetWithCategory.category.name"
           :icon="budgetWithCategory.category.icon"
