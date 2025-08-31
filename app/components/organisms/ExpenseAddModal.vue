@@ -1,27 +1,20 @@
 <script setup lang="ts">
 import { useBudgets } from '~/composables/useBudgets'
-import type { ExpenseAddModalProps, ExpenseAddModalEmits } from '~/types/ui/ExpenseAddModalProps'
+import type { ExpenseAddModalEmits } from '~/types/ui/ExpenseAddModalEmits'
+import type { ExpenseAddModalProps } from '~/types/ui/ExpenseAddModalProps'
+import type { ExpenseFormProps } from '~/types/ui/ExpenseFormProps'
 
-// useExpenseAddModal.tsから移動した型定義
-interface ExpenseForm {
-  category_id: number | null
-  amount: number | null
-  spent_at: string
-  note: string
-}
-
-const props = defineProps<ExpenseAddModalProps>()
-const emit = defineEmits<ExpenseAddModalEmits>()
-
-// useExpenseAddModal.tsから移動したロジック
-const { getAllCategoriesWithBudgets, addExpense } = useBudgets()
-
-const expenseForm = ref<ExpenseForm>({
-  category_id: null,
+const expenseForm = ref<ExpenseFormProps>({
+  categoryId: null,
   amount: null,
-  spent_at: new Date().toISOString().split('T')[0] ?? '',
+  spentAt: new Date().toISOString().split('T')[0] ?? '',
   note: '',
 })
+
+const { getAllCategoriesWithBudgets, addExpense } = useBudgets()
+
+const props = defineProps<ExpenseAddModalProps>()
+const emits = defineEmits<ExpenseAddModalEmits>()
 
 const isFormValid = ref(false)
 
@@ -39,20 +32,20 @@ const rules = {
 
 const resetForm = () => {
   expenseForm.value = {
-    category_id: null,
+    categoryId: null,
     amount: null,
-    spent_at: new Date().toISOString().split('T')[0] ?? '',
+    spentAt: new Date().toISOString().split('T')[0] ?? '',
     note: '',
   }
   isFormValid.value = false
 }
 
 const saveExpense = (): boolean => {
-  if (expenseForm.value.category_id && expenseForm.value.amount && expenseForm.value.spent_at) {
+  if (expenseForm.value.categoryId && expenseForm.value.amount && expenseForm.value.spentAt) {
     addExpense(
-      expenseForm.value.category_id,
+      expenseForm.value.categoryId,
       expenseForm.value.amount,
-      expenseForm.value.spent_at,
+      expenseForm.value.spentAt,
       expenseForm.value.note || undefined,
     )
     resetForm()
@@ -64,15 +57,15 @@ const saveExpense = (): boolean => {
 const isFormComplete = computed(() => {
   return !!(
     isFormValid.value
-    && expenseForm.value.category_id
+    && expenseForm.value.categoryId
     && expenseForm.value.amount
-    && expenseForm.value.spent_at
+    && expenseForm.value.spentAt
   )
 })
 
 const internalModalValue = computed({
   get: () => props.showModal,
-  set: (value: boolean) => emit('update:showModal', value),
+  set: (value: boolean) => emits('update:showModal', value),
 })
 
 const handleModalClose = () => {
@@ -83,13 +76,12 @@ const handleModalClose = () => {
 const handleSaveExpense = () => {
   if (saveExpense()) {
     internalModalValue.value = false
-    emit('expense-saved')
+    emits('expense-saved')
   }
 }
 </script>
 
 <template>
-  <!-- ExpenseAddModal (inlined) -->
   <v-dialog
     v-model="internalModalValue"
     max-width="600"
@@ -122,12 +114,12 @@ const handleSaveExpense = () => {
               カテゴリ
             </v-label>
             <v-select
-              v-model="expenseForm.category_id"
+              v-model="expenseForm.categoryId"
               label="カテゴリを選択"
               variant="outlined"
               :items="categories"
               item-title="name"
-              item-value="category_id"
+              item-value="categoryId"
               required
               :rules="[rules.category]"
               class="mb-2"
@@ -182,7 +174,7 @@ const handleSaveExpense = () => {
               支出日
             </v-label>
             <v-text-field
-              v-model="expenseForm.spent_at"
+              v-model="expenseForm.spentAt"
               label="支出日を選択"
               type="date"
               variant="outlined"
