@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { COLOR_OPTIONS } from '~/constants/colors'
+
 interface CategoryForm {
   name: string
   description: string
@@ -35,21 +37,6 @@ const updateCategoryForm = (field: keyof CategoryForm, value: string) => {
     [field]: value,
   })
 }
-
-const colorOptions = [
-  { title: 'プライマリー', value: 'primary' },
-  { title: 'セカンダリー', value: 'secondary' },
-  { title: '成功', value: 'success' },
-  { title: '情報', value: 'info' },
-  { title: '警告', value: 'warning' },
-  { title: 'エラー', value: 'error' },
-  { title: '赤', value: 'red' },
-  { title: 'ピンク', value: 'pink' },
-  { title: '紫', value: 'purple' },
-  { title: '青', value: 'blue' },
-  { title: '緑', value: 'green' },
-  { title: 'オレンジ', value: 'orange' },
-]
 </script>
 
 <template>
@@ -108,7 +95,6 @@ const colorOptions = [
                   <template #prepend>
                     <v-icon>{{ item.value }}</v-icon>
                   </template>
-                  <v-list-item-title>{{ item.value }}</v-list-item-title>
                 </v-list-item>
               </template>
             </v-select>
@@ -119,7 +105,7 @@ const colorOptions = [
               :model-value="props.categoryForm.color"
               label="カラー"
               variant="outlined"
-              :items="colorOptions"
+              :items="COLOR_OPTIONS"
               required
               :rules="[(v) => !!v || 'カラーを選択してください']"
               @update:model-value="(value) => updateCategoryForm('color', value)"
