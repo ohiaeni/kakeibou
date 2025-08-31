@@ -112,16 +112,23 @@ const updateCategoryForm = (field: keyof CategoryForm, value: string) => {
             >
               <template #selection="{ item }">
                 <div class="d-flex align-center">
-                  <v-chip :color="item.value" class="mr-2" size="small" />
-                  {{ item.title }}
+                  <v-chip
+                    :color="item.value"
+                    variant="flat"
+                    class="mr-2"
+                    size="small"
+                  />
                 </div>
               </template>
               <template #item="{ props: itemProps, item }">
-                <v-list-item v-bind="itemProps">
+                <v-list-item v-bind="itemProps" :title="''">
                   <template #prepend>
-                    <v-chip :color="item.value" size="small" />
+                    <v-chip
+                      :color="item.value"
+                      variant="flat"
+                      size="small"
+                    />
                   </template>
-                  <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item>
               </template>
             </v-select>
