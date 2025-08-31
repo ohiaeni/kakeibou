@@ -146,7 +146,7 @@ const updateCategoryForm = (field: keyof CategoryForm, value: string) => {
           キャンセル
         </v-btn>
         <v-btn
-          color="secondary"
+          color="primary"
           variant="elevated"
           :disabled="!props.categoryForm.name.trim() || !props.categoryForm.icon || !props.categoryForm.color"
           @click="handleSave"
