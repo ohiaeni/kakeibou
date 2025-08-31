@@ -582,7 +582,12 @@ export const useBudgets = () => {
         const category = categories.value.find(c => c.category_id === expense.category_id)
         return {
           ...expense,
-          category,
+          category: category
+            ? {
+                ...category,
+                color: category.color || 'primary', // colorがundefinedの場合はデフォルト値を設定
+              }
+            : undefined,
         }
       })
       .filter(expense => expense.category) // カテゴリが見つからない支出は除外
