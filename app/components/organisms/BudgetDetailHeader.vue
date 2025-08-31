@@ -2,7 +2,6 @@
 interface Props {
   categoryName: string
   onGoBack: () => void
-  onEditCategory: () => void
 }
 
 const props = defineProps<Props>()
@@ -21,14 +20,5 @@ const props = defineProps<Props>()
         {{ props.categoryName }}
       </h1>
     </div>
-    <v-btn
-      color="secondary"
-      variant="outlined"
-      size="small"
-      prepend-icon="mdi-pencil"
-      @click="props.onEditCategory"
-    >
-      カテゴリ編集
-    </v-btn>
   </div>
 </template>

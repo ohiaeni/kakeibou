@@ -72,11 +72,6 @@ const openCategoryEdit = () => {
   }
   categoryDialog.value = true
 }
-
-// ホームに戻る関数
-const goBack = () => {
-  router.push('/')
-}
 </script>
 
 <template>
@@ -89,7 +84,7 @@ const goBack = () => {
       <v-btn
         color="primary"
         class="mt-4"
-        @click="goBack"
+        @click="() => router.push('/')"
       >
         ホームに戻る
       </v-btn>
@@ -99,13 +94,13 @@ const goBack = () => {
     <div v-else>
       <OrganismsBudgetDetailHeader
         :category-name="category.name"
-        @go-back="goBack"
-        @edit-category="openCategoryEdit"
+        @go-back="() => router.push('/')"
       />
 
       <OrganismsCategoryDetailCard
         :category="category"
         :usage-percentage="budgetWithCategory?.usage_percentage || 0"
+        @edit-category="openCategoryEdit"
       />
 
       <OrganismsBudgetStatisticsCard
