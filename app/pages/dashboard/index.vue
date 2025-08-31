@@ -102,61 +102,30 @@ const _chartData = computed(() => {
 
 <template>
   <v-container>
-    <!-- ヘッダー -->
-    <OrganismsDashboardHeader :year="currentYear" :month="currentMonth" />
-
-    <!-- 概要カード -->
-    <MoleculesDashboardSummaryCards :cards="dashboardCards" />
-
-    <!-- 予算vs支出の全体進捗 -->
-    <MoleculesBudgetProgressCard
+    <OrganismsDashboardContent
+      :year="currentYear"
+      :month="currentMonth"
+      :dashboard-cards="dashboardCards"
       :total-progress="totalProgress"
       :month-elapsed="monthElapsed"
-    />    <v-row>
-      <!-- カテゴリ別支出ランキング -->
-      <v-col cols="12" lg="6">
-        <MoleculesExpenseRankingCard :budgets-with-categories="budgetsWithCategories" />
-      </v-col>
-
-      <!-- アラートとアドバイス -->
-      <v-col cols="12" lg="6">
-        <MoleculesAlertsAndAdviceCard
-          :over-budget-categories="overBudgetCategories"
-          :total-progress="totalProgress"
-          :month-elapsed="monthElapsed"
-          :top-expense-category="topExpenseCategory"
-          :total-budget="totalBudget"
-        />
-      </v-col>
-    </v-row>
-
-    <!-- 最近の支出リスト -->
-    <MoleculesRecentExpensesCard
+      :budgets-with-categories="budgetsWithCategories"
+      :over-budget-categories="overBudgetCategories"
+      :top-expense-category="topExpenseCategory"
+      :total-budget="totalBudget"
       :recent-expenses="recentExpenses"
       @open-expense-modal="openExpenseModal"
-    />    <!-- 支出追加モーダル -->
+    />
+
+    <!-- 支出追加モーダル -->
     <OrganismsExpenseAddModal
       v-model="showExpenseModal"
       @saved="handleExpenseSaved"
     />
 
     <!-- 成功メッセージ -->
-    <v-snackbar
+    <MoleculesSuccessSnackbar
       v-model="showSuccessMessage"
-      color="success"
-      timeout="3000"
-      location="top"
-    >
-      支出を追加しました
-      <template #actions>
-        <v-btn
-          color="white"
-          variant="text"
-          @click="showSuccessMessage = false"
-        >
-          閉じる
-        </v-btn>
-      </template>
-    </v-snackbar>
+      message="支出を追加しました"
+    />
   </v-container>
 </template>

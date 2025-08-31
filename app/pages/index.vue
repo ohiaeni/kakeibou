@@ -10,6 +10,26 @@ const handleExpenseSaved = () => {
 }
 
 const showSuccessMessage = ref(false)
+
+// アクションボタンの設定
+const actionButtons = [
+  {
+    icon: 'mdi-plus',
+    label: '支出を追加',
+    color: 'primary',
+    variant: 'tonal' as const,
+    labelColor: 'text-primary',
+    onClick: openExpenseModal,
+  },
+  {
+    icon: 'mdi-chart-line',
+    label: 'ダッシュボード',
+    color: 'surface-variant',
+    variant: 'tonal' as const,
+    labelColor: 'text-on-surface',
+    to: '/dashboard',
+  },
+]
 </script>
 
 <template>
@@ -26,43 +46,7 @@ const showSuccessMessage = ref(false)
       />
     </v-fade-transition>
 
-    <div class="d-flex justify-center align-center ga-6 ga-sm-8 ga-md-10 mb-8 mb-sm-10 mb-md-12 pa-6 pa-sm-8 pa-md-10">
-      <!-- 支出を追加ボタン -->
-      <div class="d-flex flex-column align-center ga-3" style="min-width: 100px;">
-        <AtomsButton
-          color="primary"
-          variant="tonal"
-          rounded="xl"
-          size="large"
-          icon="mdi-plus"
-          class="elevation-1"
-          :style="'width: 70px; height: 70px; transition: all 0.3s ease;'"
-          :hover-translate="true"
-          @click="openExpenseModal"
-        />
-        <div class="text-body-2 font-weight-medium text-primary text-center">
-          支出を追加
-        </div>
-      </div>
-
-      <!-- ダッシュボード遷移ボタン -->
-      <div class="d-flex flex-column align-center ga-3" style="min-width: 100px;">
-        <AtomsButton
-          color="surface-variant"
-          variant="tonal"
-          rounded="xl"
-          size="large"
-          icon="mdi-chart-line"
-          class="elevation-2"
-          :style="'width: 70px; height: 70px; transition: all 0.3s ease;'"
-          :hover-translate="true"
-          :to="'/dashboard'"
-        />
-        <div class="text-body-2 font-weight-medium text-on-surface text-center">
-          ダッシュボード
-        </div>
-      </div>
-    </div>
+    <OrganismsActionButtonGroup :actions="actionButtons" />
 
     <OrganismsBudgetItemList />
 
