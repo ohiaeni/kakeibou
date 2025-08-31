@@ -591,6 +591,18 @@ export const useBudgets = () => {
     return limit ? filteredExpenses.slice(0, limit) : filteredExpenses
   }
 
+  // BudgetWithCategoryをBudgetItemPropsに変換
+  const getBudgetItemsForDisplay = (year: number = currentYear.value, month: number = currentMonth.value) => {
+    return getAllCategoriesWithBudgets(year, month).map(budget => ({
+      id: budget.category.category_id,
+      icon: budget.category.icon,
+      label: budget.category.name,
+      value: budget.usage_percentage,
+      amount: budget.amount,
+      color: budget.category.color || 'primary',
+    }))
+  }
+
   return {
     currentUserId,
     currentYear,
@@ -610,5 +622,6 @@ export const useBudgets = () => {
     getTotalExpense,
     getBudgetProgress,
     getExpensesWithCategories,
+    getBudgetItemsForDisplay,
   }
 }

@@ -1,44 +1,19 @@
 <script setup lang="ts">
 import { useHome } from '~/composables/useHome'
 import { useBudgets } from '~/composables/useBudgets'
-
-interface ActionButton {
-  icon: string
-  label: string
-  color?: string
-  variant?: 'elevated' | 'flat' | 'tonal' | 'outlined' | 'text' | 'plain'
-  labelColor?: string
-  to?: string
-  onClick?: () => void
-}
+import type { ActionButtonProps } from '~/types/ui/ActionButtonProps'
+import { OrganismsIndexActionButtons } from '#components'
 
 const {
   showExpenseModal,
   showSuccessMessage,
-  actionButtons,
-  openExpenseModal,
   handleExpenseSaved,
 } = useHome()
 
-const { getAllCategoriesWithBudgets, addExpense } = useBudgets()
+const { getAllCategoriesWithBudgets, addExpense, getBudgetItemsForDisplay } = useBudgets()
 const router = useRouter()
 
-const budgetsWithCategories = computed(() => getAllCategoriesWithBudgets())
-
-// ActionButton functions
-const handleActionButtonClick = (action: ActionButton) => {
-  if (action.onClick) {
-    action.onClick()
-  }
-}
-
-const handleActionButtonMouseEnter = (e: MouseEvent) => {
-  (e.target as HTMLElement).style.transform = 'translateY(-2px)'
-}
-
-const handleActionButtonMouseLeave = (e: MouseEvent) => {
-  (e.target as HTMLElement).style.transform = 'translateY(0)'
-}
+const budgetsWithCategories = computed(() => getBudgetItemsForDisplay())
 
 // BudgetItem functions
 const handleBudgetItemClick = (categoryId: number) => {
@@ -65,7 +40,7 @@ const rules = {
 }
 
 const categories = computed(() => {
-  return budgetsWithCategories.value
+  return getAllCategoriesWithBudgets()
     .filter(budget => budget.amount > 0)
     .map(budget => budget.category)
 })
@@ -104,100 +79,30 @@ const handleModalClose = () => {
 const handleSnackbarClose = () => {
   showSuccessMessage.value = false
 }
+
+const actionButtons: ActionButtonProps[] = [
+  {
+    icon: 'mdi-plus',
+    label: '支出を追加',
+    color: 'primary',
+    onClick: () => { showExpenseModal.value = true },
+  },
+  {
+    icon: 'mdi-chart-line',
+    label: 'ダッシュボード',
+    color: 'surface-variant',
+    to: '/dashboard',
+  },
+]
 </script>
 
 <template>
   <div class="pa-4 min-h-screen">
-    <!-- Header -->
-    <div class="d-flex justify-space-between align-center mb-4">
-      <h1 class="text-h4 font-weight-bold text-primary">
-        家計簿アプリ
-      </h1>
-      <v-icon icon="mdi-account-circle" size="32" color="primary" />
-    </div>
-
-    <!-- Action Buttons (inlined from ActionButtonGroup and ActionButton) -->
-    <v-card class="mb-4 pa-4" elevation="2">
-      <div class="d-flex justify-space-around">
-        <div
-          v-for="action in actionButtons"
-          :key="action.label"
-          class="d-flex flex-column align-center ga-3"
-          style="min-width: 100px;"
-        >
-          <v-btn
-            :color="action.color || 'primary'"
-            variant="tonal"
-            rounded="xl"
-            size="large"
-            :icon="action.icon"
-            class="elevation-1"
-            style="width: 70px; height: 70px; transition: all 0.3s ease;"
-            :to="action.to"
-            @click="handleActionButtonClick(action)"
-            @mouseenter="handleActionButtonMouseEnter"
-            @mouseleave="handleActionButtonMouseLeave"
-          >
-            <v-icon :icon="action.icon" />
-          </v-btn>
-          <div class="text-body-2 font-weight-medium text-center text-on-surface">
-            {{ action.label }}
-          </div>
-        </div>
-      </div>
-    </v-card>
-
-    <!-- Budget Items (inlined from BudgetItemList and BudgetItem) -->
-    <div class="w-100 mb-4">
-      <v-row>
-        <v-col
-          v-for="budgetWithCategory in budgetsWithCategories"
-          :key="budgetWithCategory.budget_id"
-          cols="4"
-          class="pa-1 pa-sm-2 pa-md-3"
-        >
-          <v-card
-            class="d-flex align-center justify-center cursor-pointer elevation-1"
-            color="surface"
-            rounded="lg"
-            hover
-            @click="handleBudgetItemClick(budgetWithCategory.category.category_id)"
-          >
-            <div class="d-flex flex-column align-center justify-center ga-2 pa-3 w-100 h-100">
-              <!-- Progress Circle (inlined) -->
-              <v-progress-circular
-                :model-value="budgetWithCategory.usage_percentage"
-                :size="75"
-                :width="18"
-                :color="budgetWithCategory.amount === 0 ? 'grey-lighten-1' : budgetWithCategory.category.color"
-                bg-color="white"
-              >
-                <span class="text-caption font-weight-medium text-on-surface">
-                  {{ budgetWithCategory.amount === 0 ? '未設定' : `${budgetWithCategory.usage_percentage}%` }}
-                </span>
-              </v-progress-circular>
-              <!-- Category Info (inlined) -->
-              <div class="d-flex align-center ga-1 flex-shrink-0">
-                <v-icon
-                  class="flex-shrink-0"
-                  size="small"
-                  :color="budgetWithCategory.amount !== 0 ? budgetWithCategory.category.color : 'grey-lighten-1'"
-                >
-                  {{ budgetWithCategory.category.icon }}
-                </v-icon>
-                <div
-                  class="text-caption font-weight-medium text-center"
-                  :class="budgetWithCategory.amount !== 0 ? 'text-on-surface' : 'text-grey-lighten-1'"
-                >
-                  {{ budgetWithCategory.category.name }}
-                </div>
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
-
+    <OrganismsIndexActionButtons :action-buttons="actionButtons" />
+    <OrganismsIndexBudgetItems
+      :budget-items="budgetsWithCategories"
+      @budget-item-click="handleBudgetItemClick"
+    />
     <!-- ExpenseAddModal (inlined) -->
     <v-dialog
       v-model="internalModalValue"
