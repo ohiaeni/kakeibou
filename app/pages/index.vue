@@ -23,12 +23,12 @@ const {
       />
     </v-fade-transition>
 
-    <OrganismsActionButtonGroup :actions="actionButtons" />
+    <ActionButtonGroup :actions="actionButtons" />
 
-    <OrganismsBudgetItemList />
+    <BudgetItemList />
 
     <!-- 支出追加モーダル -->
-    <OrganismsExpenseAddModal
+    <ExpenseAddModal
       v-model="showExpenseModal"
       @saved="handleExpenseSaved"
     />

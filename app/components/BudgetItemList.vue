@@ -20,7 +20,7 @@ const handleBudgetItemClick = (categoryId: number) => {
         cols="4"
         class="pa-1 pa-sm-2 pa-md-3"
       >
-        <MoleculesBudgetItem
+        <BudgetItem
           :id="budgetWithCategory.category.category_id"
           :name="budgetWithCategory.category.name"
           :icon="budgetWithCategory.category.icon"

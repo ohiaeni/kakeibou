@@ -47,19 +47,19 @@ const handleOpenExpenseModal = () => {
 <template>
   <div>
     <!-- ヘッダー -->
-    <OrganismsDashboardHeader :year="props.year" :month="props.month" />
+    <DashboardHeader :year="props.year" :month="props.month" />
 
     <!-- 概要カード -->
-    <MoleculesDashboardSummaryCards :cards="props.dashboardCards" />
+    <DashboardSummaryCards :cards="props.dashboardCards" />
 
     <!-- 予算vs支出の全体進捗 -->
-    <MoleculesBudgetProgressCard
+    <BudgetProgressCard
       :total-progress="props.totalProgress"
       :month-elapsed="props.monthElapsed"
     />
 
     <!-- 統計セクション -->
-    <OrganismsDashboardStatistics
+    <DashboardStatistics
       :budgets-with-categories="props.budgetsWithCategories"
       :over-budget-categories="props.overBudgetCategories"
       :total-progress="props.totalProgress"
@@ -69,7 +69,7 @@ const handleOpenExpenseModal = () => {
     />
 
     <!-- 最近の支出リスト -->
-    <MoleculesRecentExpensesCard
+    <RecentExpensesCard
       :recent-expenses="props.recentExpenses as any"
       @open-expense-modal="handleOpenExpenseModal"
     />

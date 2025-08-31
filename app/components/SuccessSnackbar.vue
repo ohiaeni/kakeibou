@@ -35,7 +35,7 @@ const handleClose = () => {
   >
     {{ props.message }}
     <template #actions>
-      <AtomsButton
+      <BaseButton
         color="white"
         variant="text"
         text="閉じる"

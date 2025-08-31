@@ -27,7 +27,7 @@ const handleClick = () => {
 
 <template>
   <div class="d-flex flex-column align-center ga-3" style="min-width: 100px;">
-    <AtomsButton
+    <BaseButton
       :color="props.color"
       :variant="props.variant"
       rounded="xl"

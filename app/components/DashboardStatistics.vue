@@ -28,12 +28,12 @@ const props = defineProps<Props>()
   <v-row>
     <!-- カテゴリ別支出ランキング -->
     <v-col cols="12" lg="6">
-      <MoleculesExpenseRankingCard :budgets-with-categories="props.budgetsWithCategories" />
+      <ExpenseRankingCard :budgets-with-categories="props.budgetsWithCategories" />
     </v-col>
 
     <!-- アラートとアドバイス -->
     <v-col cols="12" lg="6">
-      <MoleculesAlertsAndAdviceCard
+      <AlertsAndAdviceCard
         :over-budget-categories="props.overBudgetCategories"
         :total-progress="props.totalProgress"
         :month-elapsed="props.monthElapsed"

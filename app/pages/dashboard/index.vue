@@ -21,7 +21,7 @@ const {
 
 <template>
   <v-container>
-    <OrganismsDashboardContent
+    <DashboardContent
       :year="currentYear"
       :month="currentMonth"
       :dashboard-cards="dashboardCards"
@@ -36,13 +36,13 @@ const {
     />
 
     <!-- 支出追加モーダル -->
-    <OrganismsExpenseAddModal
+    <ExpenseAddModal
       v-model="showExpenseModal"
       @saved="handleExpenseSaved"
     />
 
     <!-- 成功メッセージ -->
-    <MoleculesSuccessSnackbar
+    <SuccessSnackbar
       v-model="showSuccessMessage"
       message="支出を追加しました"
     />

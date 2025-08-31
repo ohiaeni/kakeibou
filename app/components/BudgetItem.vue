@@ -29,12 +29,12 @@ const handleClick = () => {
     @click="handleClick"
   >
     <div class="d-flex flex-column align-center justify-center ga-2 pa-3 w-100 h-100">
-      <AtomsProgressCircle
+      <ProgressCircle
         :value="percentage"
         :color="amount === 0 ? 'grey-lighten-1' : color"
         :display-text="amount === 0 ? '未設定' : `${percentage}%`"
       />
-      <AtomsCategoryInfo
+      <CategoryInfo
         :icon="icon"
         :name="name"
         :color="color"

@@ -30,7 +30,7 @@ const handleActionClick = (action: ActionItem, index: number) => {
 
 <template>
   <div class="d-flex justify-center align-center ga-6 ga-sm-8 ga-md-10 mb-8 mb-sm-10 mb-md-12 pa-6 pa-sm-8 pa-md-10">
-    <MoleculesActionButton
+    <ActionButton
       v-for="(action, index) in props.actions"
       :key="index"
       :icon="action.icon"

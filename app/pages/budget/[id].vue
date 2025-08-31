@@ -126,26 +126,26 @@ watch(category, (newCategory) => {
     <!-- カテゴリ詳細表示 -->
     <div v-else>
       <!-- ヘッダー -->
-      <OrganismsBudgetDetailHeader
+      <BudgetDetailHeader
         :category-name="category.name"
         @go-back="goBack"
         @edit-category="openCategoryEdit"
       />
 
       <!-- カテゴリ詳細カード -->
-      <MoleculesCategoryDetailCard
+      <CategoryDetailCard
         :category="category"
         :budget-data="budgetWithCategory"
       />
 
       <!-- 統計情報 -->
-      <MoleculesBudgetStatisticsCard
+      <BudgetStatisticsCard
         :budget-data="budgetWithCategory"
         @edit-budget="openBudgetEdit"
       />
 
       <!-- 予算編集ダイアログ -->
-      <OrganismsBudgetEditDialog
+      <BudgetEditDialog
         v-model:is-open="budgetDialog"
         v-model:budget-form="budgetForm"
         :category-name="category.name"
@@ -154,7 +154,7 @@ watch(category, (newCategory) => {
       />
 
       <!-- カテゴリ編集ダイアログ -->
-      <OrganismsCategoryEditDialog
+      <CategoryEditDialog
         v-model:is-open="categoryDialog"
         v-model:category-form="categoryForm"
         :available-icons="availableIcons"
