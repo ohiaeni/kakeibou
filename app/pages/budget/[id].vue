@@ -111,6 +111,15 @@ const openCategoryEdit = () => {
         @edit-budget="openBudgetEdit"
       />
 
+      <OrganismsCategoryEditDialog
+        :show-dialog="categoryDialog"
+        :category-form="categoryForm"
+        :available-icons="AVAILABLE_ICONS"
+        @update:show-dialog="categoryDialog = $event"
+        @update:category-form="categoryForm = $event"
+        @save="handleSaveCategory"
+      />
+
       <OrganismsBudgetEditDialog
         :show-dialog="budgetDialog"
         :category-name="category.name"
@@ -120,15 +129,6 @@ const openCategoryEdit = () => {
         @update:show-dialog="budgetDialog = $event"
         @update:budget-form="budgetForm = $event"
         @save="handleSaveBudget"
-      />
-
-      <OrganismsCategoryEditDialog
-        :show-dialog="categoryDialog"
-        :category-form="categoryForm"
-        :available-icons="AVAILABLE_ICONS"
-        @update:show-dialog="categoryDialog = $event"
-        @update:category-form="categoryForm = $event"
-        @save="handleSaveCategory"
       />
     </div>
   </v-container>
