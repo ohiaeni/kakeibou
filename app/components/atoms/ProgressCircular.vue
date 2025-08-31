@@ -10,7 +10,7 @@ const props = defineProps<{
   <v-progress-circular
     :model-value="props.progressCircular.value"
     :size="80"
-    :width="18"
+    :width="20"
     :color="props.progressCircular.amount === 0 ? 'grey-lighten-1' : props.progressCircular.color"
     bg-color="white"
   >

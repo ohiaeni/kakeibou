@@ -23,18 +23,10 @@ const handleBudgetItemClick = (id: number) => {
       sm="4"
       md="4"
     >
-      <v-card
-        class="d-flex flex-column align-center justify-center cursor-pointer elevation-1 pa-3"
-        color="surface"
-        rounded="lg"
-        hover
-        height="120"
-      >
-        <MoleculesBudgetItem
-          :budget-item="budgetItem"
-          @click="handleBudgetItemClick"
-        />
-      </v-card>
+      <MoleculesBudgetItem
+        :budget-item="budgetItem"
+        @click="handleBudgetItemClick(budgetItem.id)"
+      />
     </v-col>
   </v-row>
 </template>
