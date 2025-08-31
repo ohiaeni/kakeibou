@@ -3,24 +3,6 @@ import { useBudgets } from '~/composables/useBudgets'
 import type { ActionButtonProps } from '~/types/ui/ActionButtonProps'
 import { OrganismsIndexActionButtons } from '#components'
 
-const showExpenseModal = ref(false)
-const showSuccessMessage = ref(false)
-
-const { getBudgetItemsForDisplay } = useBudgets()
-const budgetsWithCategories = computed(() => getBudgetItemsForDisplay())
-
-const router = useRouter()
-
-const handleBudgetItemClick = (categoryId: number) => {
-  router.push(`/budget/${categoryId}`)
-}
-const handleModalUpdate = (value: boolean) => {
-  showExpenseModal.value = value
-}
-const handleExpenseAdded = () => {
-  showSuccessMessage.value = true
-}
-
 const actionButtons: ActionButtonProps[] = [
   {
     icon: 'mdi-plus',
@@ -35,6 +17,23 @@ const actionButtons: ActionButtonProps[] = [
     to: '/dashboard',
   },
 ]
+
+const router = useRouter()
+const showExpenseModal = ref(false)
+const showSuccessMessage = ref(false)
+
+const { getBudgetItemsForDisplay } = useBudgets()
+const budgetsWithCategories = computed(() => getBudgetItemsForDisplay())
+
+const handleBudgetItemClick = (categoryId: number) => {
+  router.push(`/budget/${categoryId}`)
+}
+const handleModalUpdate = (value: boolean) => {
+  showExpenseModal.value = value
+}
+const handleExpenseAdded = () => {
+  showSuccessMessage.value = true
+}
 </script>
 
 <template>
