@@ -14,6 +14,8 @@ const props = defineProps<{
     variant="elevated"
     size="x-large"
     rounded="lg"
+    class="d-flex align-center justify-center"
+    style="min-height: 64px; min-width: 64px;"
     @click="props.button.onClick"
   />
 </template>

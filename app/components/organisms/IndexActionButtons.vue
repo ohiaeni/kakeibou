@@ -9,12 +9,17 @@ const props = defineProps<{
 
 <template>
   <v-container>
-    <v-row justify="center" gap="4">
-      <MoleculesActionButton
+    <v-row justify="center" class="ga-4">
+      <v-col
         v-for="(action, index) in props.actionButtons"
         :key="index"
-        :action-button="action"
-      />
+        cols="auto"
+        class="d-flex justify-center"
+      >
+        <MoleculesActionButton
+          :action-button="action"
+        />
+      </v-col>
     </v-row>
   </v-container>
 </template>

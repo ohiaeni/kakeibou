@@ -7,12 +7,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <v-row class="d-flex flex-column align-center" dense>
-    <v-col cols="auto">
-      <AtomsButton :button="props.actionButton" />
-    </v-col>
-    <v-col cols="auto">
-      <span>{{ props.actionButton.label }}</span>
-    </v-col>
-  </v-row>
+  <div class="d-flex flex-column align-center ga-2">
+    <AtomsButton :button="props.actionButton" />
+    <span class="text-body-2 text-center">{{ props.actionButton.label }}</span>
+  </div>
 </template>
