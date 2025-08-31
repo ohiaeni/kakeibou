@@ -2,7 +2,7 @@
 import type { ButtonProps } from '~/types/ui/ButtonProps'
 
 const props = defineProps<{
-  button?: ButtonProps
+  button: ButtonProps
 }>()
 </script>
 

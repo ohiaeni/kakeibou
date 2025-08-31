@@ -2,7 +2,7 @@
 import type { ActionButtonProps } from '~/types/ui/ActionButtonProps'
 
 const props = defineProps<{
-  actionButton?: ActionButtonProps
+  actionButton: ActionButtonProps
 }>()
 </script>
 
