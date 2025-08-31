@@ -1,6 +1,7 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
+  // ハイドレーションエラーを回避するためのSSR設定
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -9,11 +10,20 @@ export default defineNuxtConfig({
       })
     },
   ],
+  ssr: true,
   devtools: { enabled: true },
   build: {
     transpile: ['vuetify'],
   },
   compatibilityDate: '2025-07-15',
+  nitro: {
+    storage: {
+      // クライアントサイドのみでストレージを使用
+      redis: {
+        driver: 'memory',
+      },
+    },
+  },
   vite: {
     vue: {
       template: {
