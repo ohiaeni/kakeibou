@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SuccessSnackbarProps, SuccessSnackbarEmits } from '~/types/ui/SuccessSnackbarProps'
 
-defineProps<SuccessSnackbarProps>()
+const props = defineProps<SuccessSnackbarProps>()
 const emit = defineEmits<SuccessSnackbarEmits>()
 
 const handleClose = () => {
@@ -11,9 +11,9 @@ const handleClose = () => {
 
 <template>
   <v-snackbar
-    :model-value="show"
+    :model-value="props.show"
     color="success"
-    :timeout="3000"
+    :timeout="2000"
     location="top"
     @update:model-value="emit('update:show', $event)"
   >
