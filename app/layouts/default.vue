@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <NavigationBar />
+      <OrganismsNavigationBar />
       <slot />
     </v-main>
   </v-app>

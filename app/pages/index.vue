@@ -66,10 +66,10 @@ const showSuccessMessage = ref(false)
       </div>
     </div>
 
-    <BudgetItemList />
+    <OrganismsBudgetItemList />
 
     <!-- 支出追加モーダル -->
-    <ExpenseAddModal
+    <OrganismsExpenseAddModal
       v-model="showExpenseModal"
       @saved="handleExpenseSaved"
     />

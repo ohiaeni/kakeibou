@@ -103,24 +103,24 @@ const _chartData = computed(() => {
 <template>
   <v-container>
     <!-- ヘッダー -->
-    <DashboardHeader :year="currentYear" :month="currentMonth" />
+    <OrganismsDashboardHeader :year="currentYear" :month="currentMonth" />
 
     <!-- 概要カード -->
-    <DashboardSummaryCards :cards="dashboardCards" />
+    <MoleculesDashboardSummaryCards :cards="dashboardCards" />
 
     <!-- 予算vs支出の全体進捗 -->
-    <BudgetProgressCard
+    <MoleculesBudgetProgressCard
       :total-progress="totalProgress"
       :month-elapsed="monthElapsed"
     />    <v-row>
       <!-- カテゴリ別支出ランキング -->
       <v-col cols="12" lg="6">
-        <ExpenseRankingCard :budgets-with-categories="budgetsWithCategories" />
+        <MoleculesExpenseRankingCard :budgets-with-categories="budgetsWithCategories" />
       </v-col>
 
       <!-- アラートとアドバイス -->
       <v-col cols="12" lg="6">
-        <AlertsAndAdviceCard
+        <MoleculesAlertsAndAdviceCard
           :over-budget-categories="overBudgetCategories"
           :total-progress="totalProgress"
           :month-elapsed="monthElapsed"
@@ -131,11 +131,11 @@ const _chartData = computed(() => {
     </v-row>
 
     <!-- 最近の支出リスト -->
-    <RecentExpensesCard
+    <MoleculesRecentExpensesCard
       :recent-expenses="recentExpenses"
       @open-expense-modal="openExpenseModal"
     />    <!-- 支出追加モーダル -->
-    <ExpenseAddModal
+    <OrganismsExpenseAddModal
       v-model="showExpenseModal"
       @saved="handleExpenseSaved"
     />
