@@ -48,6 +48,9 @@ export const useBudgets = () => {
   const currentYear = ref(new Date().getFullYear())
   const currentMonth = ref(new Date().getMonth() + 1)
 
+  // リアクティビティを強制するためのトリガー
+  const refreshTrigger = ref(0)
+
   // サンプルカテゴリデータ
   const categories = ref<Category[]>([
     {
@@ -405,6 +408,9 @@ export const useBudgets = () => {
     if (import.meta.client) {
       localStorage.setItem('expenses', JSON.stringify(expenses.value))
     }
+
+    // リアクティビティを強制更新
+    refreshTrigger.value++
   }
 
   // ローカルストレージからデータを復元
@@ -552,6 +558,8 @@ export const useBudgets = () => {
 
   // BudgetWithCategoryをBudgetItemPropsに変換
   const getBudgetItemsForDisplay = (year: number = currentYear.value, month: number = currentMonth.value) => {
+    // refreshTriggerを使用してリアクティビティを強制
+    void refreshTrigger.value // この行はリアクティビティのトリガーとして機能
     return getAllCategoriesWithBudgets(year, month).map(budget => ({
       id: budget.category.category_id,
       icon: budget.category.icon,
