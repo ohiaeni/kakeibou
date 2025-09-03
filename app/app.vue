@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { useAuth } from '~/composables/useAuth'
-
-// アプリ起動時に認証状態を初期化
-onMounted(() => {
-  const { initAuth } = useAuth()
-  initAuth()
-})
-</script>
-
 <template>
   <ClientOnly>
     <NuxtLayout>

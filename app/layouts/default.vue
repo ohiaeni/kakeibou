@@ -1,15 +1,3 @@
-<script setup lang="ts">
-import { useAuth } from '~/composables/useAuth'
-
-const { user, logout, isAuthenticated } = useAuth()
-const router = useRouter()
-
-const handleLogout = () => {
-  logout()
-  router.push('/login')
-}
-</script>
-
 <template>
   <v-app>
     <v-main>
@@ -26,32 +14,6 @@ const handleLogout = () => {
             </NuxtLink>
           </div>
           <v-spacer />
-
-          <!-- ユーザー情報とログアウト -->
-          <ClientOnly>
-            <div v-if="isAuthenticated" class="d-flex align-center">
-              <v-chip
-                color="primary"
-                variant="tonal"
-                class="me-3"
-                prepend-icon="mdi-account"
-              >
-                {{ user?.name }}
-              </v-chip>
-
-              <v-btn
-                icon="mdi-logout"
-                variant="text"
-                size="small"
-                @click="handleLogout"
-              >
-                <v-icon>mdi-logout</v-icon>
-                <v-tooltip activator="parent" location="bottom">
-                  ログアウト
-                </v-tooltip>
-              </v-btn>
-            </div>
-          </ClientOnly>
         </v-app-bar>
       </v-container>
       <slot />
