@@ -1,46 +1,46 @@
 export interface Category {
-  category_id: number
+  categoryId: number
   name: string
   description?: string
   icon: string
   color?: string
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Budget {
-  budget_id: number
-  category_id: number
+  budgetId: number
+  categoryId: number
   amount: number
   year: number
   month: number
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Expense {
-  expense_id: number
-  user_id: number
-  category_id: number
+  expenseId: number
+  userId: number
+  categoryId: number
   amount: number
-  spent_at: string
+  spentAt: string
   note?: string
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
 }
 
 // 表示用のデータ構造
 export interface BudgetWithCategory {
-  budget_id: number
+  budgetId: number
   category: Category
   amount: number
   year: number
   month: number
-  created_at: string
-  updated_at: string
-  current_expense: number
-  usage_percentage: number
-  remaining_amount: number
+  createdAt: string
+  updatedAt: string
+  currentExpense: number
+  usagePercentage: number
+  remainingAmount: number
 }
 
 export const useBudgets = () => {
@@ -54,187 +54,187 @@ export const useBudgets = () => {
   // サンプルカテゴリデータ
   const categories = ref<Category[]>([
     {
-      category_id: 1,
+      categoryId: 1,
       name: '食費',
       description: '食材費、外食費など',
       icon: 'mdi-food',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 2,
+      categoryId: 2,
       name: '交通費',
       description: '電車賃、ガソリン代など',
       icon: 'mdi-train',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 3,
+      categoryId: 3,
       name: '娯楽',
       description: '映画、ゲーム、レジャーなど',
       icon: 'mdi-movie',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 4,
+      categoryId: 4,
       name: '光熱費',
       description: '電気代、ガス代、水道代',
       icon: 'mdi-lightning-bolt',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 5,
+      categoryId: 5,
       name: '通信費',
       description: '携帯代、インターネット代',
       icon: 'mdi-cellphone',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 6,
+      categoryId: 6,
       name: '医療費',
       description: '病院代、薬代など',
       icon: 'mdi-medical-bag',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 7,
+      categoryId: 7,
       name: '衣類',
       description: '服、靴、アクセサリーなど',
       icon: 'mdi-tshirt-crew',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 8,
+      categoryId: 8,
       name: '美容',
       description: '化粧品、美容院など',
       icon: 'mdi-face-woman',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
     {
-      category_id: 9,
+      categoryId: 9,
       name: 'その他',
       description: 'その他の支出',
       icon: 'mdi-dots-horizontal',
       color: 'primary',
-      created_at: '2025-01-01T00:00:00Z',
-      updated_at: '2025-01-01T00:00:00Z',
+      createdAt: '2025-01-01T00:00:00Z',
+      updatedAt: '2025-01-01T00:00:00Z',
     },
   ])
 
   // サンプル予算データ
   const budgets = ref<Budget[]>([
     {
-      budget_id: 1,
-      category_id: 1,
+      budgetId: 1,
+      categoryId: 1,
       amount: 50000,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
     {
-      budget_id: 2,
-      category_id: 2,
+      budgetId: 2,
+      categoryId: 2,
       amount: 15000,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
     {
-      budget_id: 3,
-      category_id: 3,
+      budgetId: 3,
+      categoryId: 3,
       amount: 20000,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
     {
-      budget_id: 4,
-      category_id: 4,
+      budgetId: 4,
+      categoryId: 4,
       amount: 12000,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
     {
-      budget_id: 5,
-      category_id: 5,
+      budgetId: 5,
+      categoryId: 5,
       amount: 8000,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
     // 予算0円のカテゴリを追加（テスト用）
     {
-      budget_id: 6,
-      category_id: 6,
+      budgetId: 6,
+      categoryId: 6,
       amount: 0,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
     {
-      budget_id: 7,
-      category_id: 7,
+      budgetId: 7,
+      categoryId: 7,
       amount: 0,
       year: 2025,
       month: 9,
-      created_at: '2025-09-01T00:00:00Z',
-      updated_at: '2025-09-01T00:00:00Z',
+      createdAt: '2025-09-01T00:00:00Z',
+      updatedAt: '2025-09-01T00:00:00Z',
     },
   ])
 
   // サンプル支出データ
   const expenses = ref<Expense[]>([
     {
-      expense_id: 1,
-      user_id: 1,
-      category_id: 1,
+      expenseId: 1,
+      userId: 1,
+      categoryId: 1,
       amount: 32500,
-      spent_at: '2025-09-15',
+      spentAt: '2025-09-15',
       note: '食材費など',
-      created_at: '2025-09-15T00:00:00Z',
-      updated_at: '2025-09-15T00:00:00Z',
+      createdAt: '2025-09-15T00:00:00Z',
+      updatedAt: '2025-09-15T00:00:00Z',
     },
     {
-      expense_id: 2,
-      user_id: 1,
-      category_id: 2,
+      expenseId: 2,
+      userId: 1,
+      categoryId: 2,
       amount: 4500,
-      spent_at: '2025-09-10',
+      spentAt: '2025-09-10',
       note: '電車代',
-      created_at: '2025-09-10T00:00:00Z',
-      updated_at: '2025-09-10T00:00:00Z',
+      createdAt: '2025-09-10T00:00:00Z',
+      updatedAt: '2025-09-10T00:00:00Z',
     },
     {
-      expense_id: 3,
-      user_id: 1,
-      category_id: 3,
+      expenseId: 3,
+      userId: 1,
+      categoryId: 3,
       amount: 17000,
-      spent_at: '2025-09-20',
+      spentAt: '2025-09-20',
       note: '映画・レジャー',
-      created_at: '2025-09-20T00:00:00Z',
-      updated_at: '2025-09-20T00:00:00Z',
+      createdAt: '2025-09-20T00:00:00Z',
+      updatedAt: '2025-09-20T00:00:00Z',
     },
   ])
 
@@ -243,15 +243,15 @@ export const useBudgets = () => {
     return budgets.value
       .filter(budget => budget.year === year && budget.month === month)
       .map((budget) => {
-        const category = categories.value.find(c => c.category_id === budget.category_id)
+        const category = categories.value.find(c => c.categoryId === budget.categoryId)
         if (!category) return null
 
         // 該当する支出を計算
         const currentExpense = expenses.value
           .filter(expense =>
-            expense.category_id === budget.category_id
-            && new Date(expense.spent_at).getFullYear() === year
-            && new Date(expense.spent_at).getMonth() + 1 === month,
+            expense.categoryId === budget.categoryId
+            && new Date(expense.spentAt).getFullYear() === year
+            && new Date(expense.spentAt).getMonth() + 1 === month,
           )
           .reduce((sum, expense) => sum + expense.amount, 0)
 
@@ -260,16 +260,16 @@ export const useBudgets = () => {
         const remainingAmount = budget.amount - currentExpense
 
         return {
-          budget_id: budget.budget_id,
+          budgetId: budget.budgetId,
           category,
           amount: budget.amount,
           year: budget.year,
           month: budget.month,
-          created_at: budget.created_at,
-          updated_at: budget.updated_at,
-          current_expense: currentExpense,
-          usage_percentage: usagePercentage,
-          remaining_amount: remainingAmount,
+          createdAt: budget.createdAt,
+          updatedAt: budget.updatedAt,
+          currentExpense: currentExpense,
+          usagePercentage: usagePercentage,
+          remainingAmount: remainingAmount,
         }
       })
       .filter(Boolean) as BudgetWithCategory[]
@@ -283,7 +283,7 @@ export const useBudgets = () => {
     // 全カテゴリに対して予算情報を作成
     const allCategoriesWithBudgets = userCategories.map((category) => {
       // 既存の予算があるかチェック
-      const existingBudget = existingBudgets.find(budget => budget.category.category_id === category.category_id)
+      const existingBudget = existingBudgets.find(budget => budget.category.categoryId === category.categoryId)
 
       if (existingBudget) {
         // 既存の予算がある場合はそれを使用
@@ -293,23 +293,23 @@ export const useBudgets = () => {
         // 予算が設定されていない場合は0円として作成
         const currentExpense = expenses.value
           .filter(expense =>
-            expense.category_id === category.category_id
-            && new Date(expense.spent_at).getFullYear() === year
-            && new Date(expense.spent_at).getMonth() + 1 === month,
+            expense.categoryId === category.categoryId
+            && new Date(expense.spentAt).getFullYear() === year
+            && new Date(expense.spentAt).getMonth() + 1 === month,
           )
           .reduce((sum, expense) => sum + expense.amount, 0)
 
         return {
-          budget_id: 0, // 未設定を示すID
+          budgetId: 0, // 未設定を示すID
           category,
           amount: 0, // 予算未設定
           year,
           month,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          current_expense: currentExpense,
-          usage_percentage: 0, // 予算未設定の場合は0%
-          remaining_amount: -currentExpense, // 予算がないので支出がマイナス表示
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          currentExpense: currentExpense,
+          usagePercentage: 0, // 予算未設定の場合は0%
+          remainingAmount: -currentExpense, // 予算がないので支出がマイナス表示
         }
       }
     })
@@ -321,7 +321,7 @@ export const useBudgets = () => {
   // カテゴリIDから予算を取得
   const getBudgetByCategoryId = (categoryId: number, year: number = currentYear.value, month: number = currentMonth.value): BudgetWithCategory | null => {
     const budgetsWithCategories = getBudgetsWithCategories(year, month)
-    return budgetsWithCategories.find(budget => budget.category.category_id === categoryId) || null
+    return budgetsWithCategories.find(budget => budget.category.categoryId === categoryId) || null
   }
 
   // カテゴリ一覧を取得
@@ -331,13 +331,13 @@ export const useBudgets = () => {
 
   // カテゴリIDからカテゴリを取得
   const getCategoryById = (categoryId: number): Category | null => {
-    return categories.value.find(category => category.category_id === categoryId) || null
+    return categories.value.find(category => category.categoryId === categoryId) || null
   }
 
   // 予算を更新
   const updateBudget = (categoryId: number, amount: number, year: number = currentYear.value, month: number = currentMonth.value): void => {
     const existingBudgetIndex = budgets.value.findIndex(budget =>
-      budget.category_id === categoryId && budget.year === year && budget.month === month,
+      budget.categoryId === categoryId && budget.year === year && budget.month === month,
     )
 
     if (existingBudgetIndex !== -1) {
@@ -345,19 +345,19 @@ export const useBudgets = () => {
       const existingBudget = budgets.value[existingBudgetIndex]
       if (existingBudget) {
         existingBudget.amount = amount
-        existingBudget.updated_at = new Date().toISOString()
+        existingBudget.updatedAt = new Date().toISOString()
       }
     }
     else {
       // 新しい予算を作成
       const newBudget: Budget = {
-        budget_id: Math.max(...budgets.value.map(b => b.budget_id), 0) + 1,
-        category_id: categoryId,
+        budgetId: Math.max(...budgets.value.map(b => b.budgetId), 0) + 1,
+        categoryId: categoryId,
         amount,
         year,
         month,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }
       budgets.value.push(newBudget)
     }
@@ -370,7 +370,7 @@ export const useBudgets = () => {
 
   // カテゴリを更新
   const updateCategory = (categoryId: number, name: string, description?: string, icon?: string, color?: string): void => {
-    const categoryIndex = categories.value.findIndex(category => category.category_id === categoryId)
+    const categoryIndex = categories.value.findIndex(category => category.categoryId === categoryId)
 
     if (categoryIndex !== -1) {
       const category = categories.value[categoryIndex]
@@ -379,7 +379,7 @@ export const useBudgets = () => {
         if (description !== undefined) category.description = description
         if (icon !== undefined) category.icon = icon
         if (color !== undefined) category.color = color
-        category.updated_at = new Date().toISOString()
+        category.updatedAt = new Date().toISOString()
       }
 
       // ローカルストレージに保存（実際のアプリケーションではAPIを使用）
@@ -392,14 +392,14 @@ export const useBudgets = () => {
   // 支出を追加
   const addExpense = (categoryId: number, amount: number, spentAt: string, note?: string): void => {
     const newExpense: Expense = {
-      expense_id: Math.max(...expenses.value.map(e => e.expense_id), 0) + 1,
-      user_id: 1, // デフォルトユーザーID
-      category_id: categoryId,
+      expenseId: Math.max(...expenses.value.map(e => e.expenseId), 0) + 1,
+      userId: 1, // デフォルトユーザーID
+      categoryId: categoryId,
       amount,
-      spent_at: spentAt,
+      spentAt: spentAt,
       note,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }
 
     expenses.value.push(newExpense)
@@ -420,19 +420,47 @@ export const useBudgets = () => {
       const savedExpenses = localStorage.getItem('expenses')
       const savedCategories = localStorage.getItem('categories')
 
+      console.log('Loading from storage:', { savedBudgets, savedExpenses, savedCategories })
+
       if (savedBudgets) {
-        budgets.value = JSON.parse(savedBudgets)
+        try {
+          const parsedBudgets = JSON.parse(savedBudgets)
+          console.log('Parsed budgets:', parsedBudgets)
+          budgets.value = parsedBudgets
+        }
+        catch (error) {
+          console.error('Error parsing budgets:', error)
+        }
       }
 
       if (savedExpenses) {
-        expenses.value = JSON.parse(savedExpenses)
+        try {
+          const parsedExpenses = JSON.parse(savedExpenses)
+          console.log('Parsed expenses:', parsedExpenses)
+          expenses.value = parsedExpenses
+        }
+        catch (error) {
+          console.error('Error parsing expenses:', error)
+        }
       }
 
       if (savedCategories) {
-        // カテゴリデータがローカルストレージにある場合は復元
-        const parsedCategories = JSON.parse(savedCategories)
-        categories.value.splice(0, categories.value.length, ...parsedCategories)
+        try {
+          // カテゴリデータがローカルストレージにある場合は復元
+          const parsedCategories = JSON.parse(savedCategories)
+          console.log('Parsed categories:', parsedCategories)
+          categories.value.splice(0, categories.value.length, ...parsedCategories)
+        }
+        catch (error) {
+          console.error('Error parsing categories:', error)
+        }
       }
+
+      console.log('Final data state:', {
+        budgets: budgets.value,
+        expenses: expenses.value,
+        categories: categories.value,
+      })
     }
   }
 
@@ -455,49 +483,49 @@ export const useBudgets = () => {
   const resetCategories = (): void => {
     categories.value = [
       {
-        category_id: 1,
+        categoryId: 1,
         name: '食費',
         description: '食材費、外食費など',
         icon: 'mdi-food',
         color: 'primary',
-        created_at: '2025-01-01T00:00:00Z',
-        updated_at: '2025-01-01T00:00:00Z',
+        createdAt: '2025-01-01T00:00:00Z',
+        updatedAt: '2025-01-01T00:00:00Z',
       },
       {
-        category_id: 2,
+        categoryId: 2,
         name: '交通費',
         description: '電車賃、ガソリン代など',
         icon: 'mdi-train',
         color: 'primary',
-        created_at: '2025-01-01T00:00:00Z',
-        updated_at: '2025-01-01T00:00:00Z',
+        createdAt: '2025-01-01T00:00:00Z',
+        updatedAt: '2025-01-01T00:00:00Z',
       },
       {
-        category_id: 3,
+        categoryId: 3,
         name: '娯楽',
         description: '映画、ゲーム、レジャーなど',
         icon: 'mdi-movie',
         color: 'primary',
-        created_at: '2025-01-01T00:00:00Z',
-        updated_at: '2025-01-01T00:00:00Z',
+        createdAt: '2025-01-01T00:00:00Z',
+        updatedAt: '2025-01-01T00:00:00Z',
       },
       {
-        category_id: 4,
+        categoryId: 4,
         name: '光熱費',
         description: '電気、ガス、水道代など',
         icon: 'mdi-lightning-bolt',
         color: 'warning',
-        created_at: '2025-01-01T00:00:00Z',
-        updated_at: '2025-01-01T00:00:00Z',
+        createdAt: '2025-01-01T00:00:00Z',
+        updatedAt: '2025-01-01T00:00:00Z',
       },
       {
-        category_id: 5,
+        categoryId: 5,
         name: 'その他',
         description: 'その他の支出',
         icon: 'mdi-dots-horizontal',
         color: 'secondary',
-        created_at: '2025-01-01T00:00:00Z',
-        updated_at: '2025-01-01T00:00:00Z',
+        createdAt: '2025-01-01T00:00:00Z',
+        updatedAt: '2025-01-01T00:00:00Z',
       },
     ]
   }
@@ -518,8 +546,8 @@ export const useBudgets = () => {
   const getTotalExpense = (year: number = currentYear.value, month: number = currentMonth.value): number => {
     return expenses.value
       .filter(expense =>
-        new Date(expense.spent_at).getFullYear() === year
-          && new Date(expense.spent_at).getMonth() + 1 === month,
+        new Date(expense.spentAt).getFullYear() === year
+          && new Date(expense.spentAt).getMonth() + 1 === month,
       )
       .reduce((sum, expense) => sum + expense.amount, 0)
   }
@@ -535,11 +563,11 @@ export const useBudgets = () => {
   const getExpensesWithCategories = (year: number = currentYear.value, month: number = currentMonth.value, limit?: number) => {
     const filteredExpenses = expenses.value
       .filter(expense =>
-        new Date(expense.spent_at).getFullYear() === year
-          && new Date(expense.spent_at).getMonth() + 1 === month,
+        new Date(expense.spentAt).getFullYear() === year
+          && new Date(expense.spentAt).getMonth() + 1 === month,
       )
       .map((expense) => {
-        const category = categories.value.find(c => c.category_id === expense.category_id)
+        const category = categories.value.find(c => c.categoryId === expense.categoryId)
         return {
           ...expense,
           category: category
@@ -551,7 +579,7 @@ export const useBudgets = () => {
         }
       })
       .filter(expense => expense.category) // カテゴリが見つからない支出は除外
-      .sort((a, b) => new Date(b.spent_at).getTime() - new Date(a.spent_at).getTime()) // 新しい順にソート
+      .sort((a, b) => new Date(b.spentAt).getTime() - new Date(a.spentAt).getTime()) // 新しい順にソート
 
     return limit ? filteredExpenses.slice(0, limit) : filteredExpenses
   }
@@ -561,10 +589,10 @@ export const useBudgets = () => {
     // refreshTriggerを使用してリアクティビティを強制
     void refreshTrigger.value // この行はリアクティビティのトリガーとして機能
     return getAllCategoriesWithBudgets(year, month).map(budget => ({
-      id: budget.category.category_id,
+      id: budget.category.categoryId,
       icon: budget.category.icon,
       label: budget.category.name,
-      value: budget.usage_percentage,
+      value: budget.usagePercentage,
       amount: budget.amount,
       color: budget.category.color || 'primary',
     }))

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 interface ExpenseWithCategory {
-  expense_id: number
-  user_id: number
-  category_id: number
+  expenseId: number
+  userId: number
+  categoryId: number
   amount: number
-  spent_at: string
+  spentAt: string
   note?: string
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
   category?: {
-    category_id: number
+    categoryId: number
     name: string
     icon: string
     color: string
@@ -66,7 +66,7 @@ const props = defineProps<Props>()
           ¥{{ expense.amount?.toLocaleString() }}
         </v-list-item-title>
         <v-list-item-subtitle class="text-caption">
-          {{ expense.category?.name }} • {{ expense.spent_at }}
+          {{ expense.category?.name }} • {{ expense.spentAt }}
           <span v-if="expense.note" class="text-grey-darken-1">
             • {{ expense.note }}
           </span>

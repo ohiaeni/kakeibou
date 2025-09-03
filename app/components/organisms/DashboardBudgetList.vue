@@ -16,7 +16,7 @@ const props = defineProps<Props>()
     <v-row>
       <v-col
         v-for="budget in props.budgetsWithCategories.slice(0, 6)"
-        :key="budget.budget_id"
+        :key="budget.budgetId"
         cols="12"
         sm="6"
         md="4"
@@ -35,16 +35,16 @@ const props = defineProps<Props>()
                 {{ budget.category.name }}
               </div>
               <div class="text-caption text-grey-darken-1">
-                ¥{{ budget.current_expense.toLocaleString() }} / ¥{{ budget.amount.toLocaleString() }}
+                ¥{{ budget.currentExpense.toLocaleString() }} / ¥{{ budget.amount.toLocaleString() }}
               </div>
             </div>
           </div>
           <div class="text-right">
             <div
               class="text-body-2 font-weight-bold"
-              :class="budget.usage_percentage > 100 ? 'text-error' : budget.usage_percentage > 80 ? 'text-warning' : 'text-success'"
+              :class="budget.usagePercentage > 100 ? 'text-error' : budget.usagePercentage > 80 ? 'text-warning' : 'text-success'"
             >
-              {{ Math.round(budget.usage_percentage) }}%
+              {{ Math.round(budget.usagePercentage) }}%
             </div>
           </div>
         </div>

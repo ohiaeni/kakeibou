@@ -99,15 +99,15 @@ const openCategoryEdit = () => {
 
       <OrganismsCategoryDetailCard
         :category="category"
-        :usage-percentage="budgetWithCategory?.usage_percentage || 0"
+        :usage-percentage="budgetWithCategory?.usagePercentage || 0"
         @edit-category="openCategoryEdit"
       />
 
       <OrganismsBudgetStatisticsCard
-        :current-expense="budgetWithCategory?.current_expense || 0"
-        :remaining-amount="budgetWithCategory?.remaining_amount || 0"
+        :current-expense="budgetWithCategory?.currentExpense || 0"
+        :remaining-amount="budgetWithCategory?.remainingAmount || 0"
         :budget-amount="budgetWithCategory?.amount || 0"
-        :usage-percentage="budgetWithCategory?.usage_percentage || 0"
+        :usage-percentage="budgetWithCategory?.usagePercentage || 0"
         @edit-budget="openBudgetEdit"
       />
 
@@ -124,7 +124,7 @@ const openCategoryEdit = () => {
         :show-dialog="budgetDialog"
         :category-name="category.name"
         :current-budget="budgetWithCategory?.amount || 0"
-        :current-expense="budgetWithCategory?.current_expense || 0"
+        :current-expense="budgetWithCategory?.currentExpense || 0"
         :budget-form="budgetForm"
         @update:show-dialog="budgetDialog = $event"
         @update:budget-form="budgetForm = $event"

@@ -119,7 +119,7 @@ const handleSaveExpense = () => {
               variant="outlined"
               :items="categories"
               item-title="name"
-              item-value="category_id"
+              item-value="categoryId"
               required
               :rules="[rules.category]"
               class="mb-2"
