@@ -20,6 +20,7 @@ export interface Budget {
 
 export interface Expense {
   expense_id: number
+  user_id: number
   category_id: number
   amount: number
   spent_at: string
@@ -139,45 +140,45 @@ export const useBudgets = () => {
       category_id: 1,
       amount: 50000,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
     {
       budget_id: 2,
       category_id: 2,
       amount: 15000,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
     {
       budget_id: 3,
       category_id: 3,
       amount: 20000,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
     {
       budget_id: 4,
       category_id: 4,
       amount: 12000,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
     {
       budget_id: 5,
       category_id: 5,
       amount: 8000,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
     // 予算0円のカテゴリを追加（テスト用）
     {
@@ -185,18 +186,18 @@ export const useBudgets = () => {
       category_id: 6,
       amount: 0,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
     {
       budget_id: 7,
       category_id: 7,
       amount: 0,
       year: 2025,
-      month: 8,
-      created_at: '2025-08-01T00:00:00Z',
-      updated_at: '2025-08-01T00:00:00Z',
+      month: 9,
+      created_at: '2025-09-01T00:00:00Z',
+      updated_at: '2025-09-01T00:00:00Z',
     },
   ])
 
@@ -204,30 +205,33 @@ export const useBudgets = () => {
   const expenses = ref<Expense[]>([
     {
       expense_id: 1,
+      user_id: 1,
       category_id: 1,
       amount: 32500,
-      spent_at: '2025-08-15',
+      spent_at: '2025-09-15',
       note: '食材費など',
-      created_at: '2025-08-15T00:00:00Z',
-      updated_at: '2025-08-15T00:00:00Z',
+      created_at: '2025-09-15T00:00:00Z',
+      updated_at: '2025-09-15T00:00:00Z',
     },
     {
       expense_id: 2,
+      user_id: 1,
       category_id: 2,
       amount: 4500,
-      spent_at: '2025-08-10',
+      spent_at: '2025-09-10',
       note: '電車代',
-      created_at: '2025-08-10T00:00:00Z',
-      updated_at: '2025-08-10T00:00:00Z',
+      created_at: '2025-09-10T00:00:00Z',
+      updated_at: '2025-09-10T00:00:00Z',
     },
     {
       expense_id: 3,
+      user_id: 1,
       category_id: 3,
       amount: 17000,
-      spent_at: '2025-08-20',
+      spent_at: '2025-09-20',
       note: '映画・レジャー',
-      created_at: '2025-08-20T00:00:00Z',
-      updated_at: '2025-08-20T00:00:00Z',
+      created_at: '2025-09-20T00:00:00Z',
+      updated_at: '2025-09-20T00:00:00Z',
     },
   ])
 
@@ -319,7 +323,7 @@ export const useBudgets = () => {
 
   // カテゴリ一覧を取得
   const getCategories = (): Category[] => {
-    return categories.value.filter(_category => true)
+    return categories.value
   }
 
   // カテゴリIDからカテゴリを取得
@@ -329,10 +333,8 @@ export const useBudgets = () => {
 
   // 予算を更新
   const updateBudget = (categoryId: number, amount: number, year: number = currentYear.value, month: number = currentMonth.value): void => {
-    const existingBudgetIndex = budgets.value.findIndex(
-      budget => budget.category_id === categoryId
-        && budget.year === year
-        && budget.month === month,
+    const existingBudgetIndex = budgets.value.findIndex(budget =>
+      budget.category_id === categoryId && budget.year === year && budget.month === month,
     )
 
     if (existingBudgetIndex !== -1) {
@@ -346,7 +348,7 @@ export const useBudgets = () => {
     else {
       // 新しい予算を作成
       const newBudget: Budget = {
-        budget_id: Math.max(...budgets.value.map(b => b.budget_id)) + 1,
+        budget_id: Math.max(...budgets.value.map(b => b.budget_id), 0) + 1,
         category_id: categoryId,
         amount,
         year,
@@ -388,6 +390,7 @@ export const useBudgets = () => {
   const addExpense = (categoryId: number, amount: number, spentAt: string, note?: string): void => {
     const newExpense: Expense = {
       expense_id: Math.max(...expenses.value.map(e => e.expense_id), 0) + 1,
+      user_id: 1, // デフォルトユーザーID
       category_id: categoryId,
       amount,
       spent_at: spentAt,
